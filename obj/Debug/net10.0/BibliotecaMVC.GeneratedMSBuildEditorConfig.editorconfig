@@ -8,6 +8,7 @@ build_property.ProjectTypeGuids =
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BibliotecaMVC
 build_property.RootNamespace = BibliotecaMVC
@@ -21,6 +22,10 @@ build_property.MSBuildProjectDirectory = C:\Users\Rodrigo\Documents\Tareas UEES\
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/Rodrigo/Documents/Tareas UEES/Programacion web frontend 2/BibliotecaMVC/Views/Autores/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0b3Jlc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Rodrigo/Documents/Tareas UEES/Programacion web frontend 2/BibliotecaMVC/Views/Home/AcercaDe.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2VyY2FEZS5jc2h0bWw=
