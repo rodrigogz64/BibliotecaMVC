@@ -1,0 +1,5 @@
+C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\images\cien-anios-de-soledad.svg
+C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\images\ficciones.svg
+C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\images\la-casa-de-los-espiritus.svg
+C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\images\la-ciudad-y-los-perros.svg
+C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\images\rayuela.svg

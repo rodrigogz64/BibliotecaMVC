@@ -1,0 +1,59 @@
+@model LibroFormViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+<input type="hidden" asp-for="Libro.Id" />
+
+<div class="row g-3">
+    <div class="col-md-8">
+        <label asp-for="Libro.Titulo" class="form-label"></label>
+        <input asp-for="Libro.Titulo" class="form-control" />
+        <span asp-validation-for="Libro.Titulo" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="Libro.Isbn" class="form-label"></label>
+        <input asp-for="Libro.Isbn" class="form-control" />
+        <span asp-validation-for="Libro.Isbn" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Libro.AutorId" class="form-label"></label>
+        <select asp-for="Libro.AutorId" asp-items="Model.Autores" class="form-select">
+            <option value="0">-- Seleccione un autor --</option>
+        </select>
+        <span asp-validation-for="Libro.AutorId" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Libro.AnioPublicacion" class="form-label"></label>
+        <input asp-for="Libro.AnioPublicacion" class="form-control" type="number" />
+        <span asp-validation-for="Libro.AnioPublicacion" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="Libro.Genero" class="form-label"></label>
+        <input asp-for="Libro.Genero" class="form-control" />
+        <span asp-validation-for="Libro.Genero" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-8">
+        <label asp-for="Imagen" class="form-label"></label>
+        <input asp-for="Imagen" class="form-control" accept="image/*" />
+        <div class="form-text">Tamaño máximo 2 MB. Si no selecciona una imagen se conserva la portada actual.</div>
+        <span asp-validation-for="Imagen" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <span class="form-label d-block">Portada actual</span>
+        <img src="@Model.ImagenActualUrl" class="img-thumbnail object-fit-cover" height="140" width="100"
+             alt="Portada actual del libro" />
+    </div>
+
+    <div class="col-12">
+        <div class="form-check">
+            <input asp-for="Libro.Disponible" class="form-check-input" />
+            <label asp-for="Libro.Disponible" class="form-check-label"></label>
+        </div>
+    </div>
+</div>

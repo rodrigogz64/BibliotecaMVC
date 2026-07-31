@@ -1,61 +1,78 @@
-using Microsoft.AspNetCore.Mvc;
 using BibliotecaMVC.Models;
+using BibliotecaMVC.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BibliotecaMVC.Controllers;
 
 public class AutoresController : Controller
 {
-    public IActionResult Index()
-    {
-        List<Autor> autores = new List<Autor>
-        {
-            new Autor
-            {
-                Id = 1,
-                Nombre = "Gabriel",
-                Apellido = "García Márquez",
-                Nacionalidad = "Colombiana",
-                FechaNacimiento = new DateTime(1927, 3, 6),
-                Activo = true
-            },
-            new Autor
-            {
-                Id = 2,
-                Nombre = "Isabel",
-                Apellido = "Allende",
-                Nacionalidad = "Chilena",
-                FechaNacimiento = new DateTime(1942, 8, 2),
-                Activo = true
-            },
-            new Autor
-            {
-                Id = 3,
-                Nombre = "Mario",
-                Apellido = "Vargas Llosa",
-                Nacionalidad = "Peruana",
-                FechaNacimiento = new DateTime(1936, 3, 28),
-                Activo = true
-            },
-            new Autor
-            {
-                Id = 4,
-                Nombre = "Jorge Luis",
-                Apellido = "Borges",
-                Nacionalidad = "Argentina",
-                FechaNacimiento = new DateTime(1899, 8, 24),
-                Activo = false
-            },
-            new Autor
-            {
-                Id = 5,
-                Nombre = "Julio",
-                Apellido = "Cortázar",
-                Nacionalidad = "Argentina",
-                FechaNacimiento = new DateTime(1914, 8, 26),
-                Activo = false
-            }
-        };
+    private readonly IAutorService _autorService;
 
-        return View(autores);
+    public AutoresController(IAutorService autorService)
+    {
+        _autorService = autorService;
+    }
+
+    public IActionResult Index() =>
+        View(_autorService.ListarAutores());
+
+    public IActionResult Details(int id)
+    {
+        var autor = _autorService.ObtenerAutor(id);
+        return autor is null ? NotFound() : View(autor);
+    }
+
+    public IActionResult Create() =>
+        View(new Autor { Activo = true });
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create(Autor autor)
+    {
+        if (!ModelState.IsValid) return View(autor);
+
+        _autorService.RegistrarAutor(autor);
+        TempData["Mensaje"] = $"Autor \"{autor.NombreCompleto}\" agregado correctamente.";
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Edit(int id)
+    {
+        var autor = _autorService.ObtenerAutor(id);
+        return autor is null ? NotFound() : View(autor);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(Autor autor)
+    {
+        if (!ModelState.IsValid) return View(autor);
+
+        if (_autorService.ObtenerAutor(autor.Id) is null) return NotFound();
+
+        _autorService.ActualizarAutor(autor);
+        TempData["Mensaje"] = $"Autor \"{autor.NombreCompleto}\" actualizado correctamente.";
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Delete(int id)
+    {
+        var autor = _autorService.ObtenerAutor(id);
+        return autor is null ? NotFound() : View(autor);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var autor = _autorService.ObtenerAutor(id);
+        if (autor is null) return NotFound();
+
+        _autorService.EliminarAutor(id);
+        TempData["Mensaje"] = $"Autor \"{autor.NombreCompleto}\" eliminado correctamente.";
+
+        return RedirectToAction(nameof(Index));
     }
 }

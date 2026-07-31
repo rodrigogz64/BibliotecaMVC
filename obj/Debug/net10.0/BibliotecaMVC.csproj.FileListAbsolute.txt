@@ -96,4 +96,5 @@ C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\BibliotecaMVC.genruntimeconfig.cache
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\ref\BibliotecaMVC.dll
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\BibliotecaMVC.sourcelink.json
+C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\compressed\nyxa18m05c-{0}-ji9q26is80-ji9q26is80.gz
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

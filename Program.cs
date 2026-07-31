@@ -1,7 +1,16 @@
+using BibliotecaMVC.Repositories;
+using BibliotecaMVC.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IAutorRepository, AutorRepository>();
+builder.Services.AddScoped<IAutorService, AutorService>();
+builder.Services.AddScoped<ILibroRepository, LibroRepository>();
+builder.Services.AddScoped<ILibroService, LibroService>();
+builder.Services.AddScoped<IAlmacenamientoImagenes, AlmacenamientoImagenesLocal>();
 
 var app = builder.Build();
 
@@ -19,6 +28,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+// MapStaticAssets solo sirve los archivos que existían al compilar. Las portadas
+// que el usuario sube en tiempo de ejecución a wwwroot/images necesitan además
+// este middleware, de lo contrario darían 404.
+app.UseStaticFiles();
 
 app.MapControllerRoute(
     name: "default",

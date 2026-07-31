@@ -1,0 +1,42 @@
+@model LibroViewModel
+@{
+    ViewData["Title"] = "Eliminar libro";
+}
+
+<h1 class="mb-4">Eliminar libro</h1>
+
+<div class="alert alert-warning" role="alert">
+    ¿Está seguro de que desea eliminar este libro? También se borrará su portada y la acción no se puede deshacer.
+</div>
+
+<div class="card shadow-sm">
+    <div class="row g-0">
+        <div class="col-md-3">
+            <img src="@Model.ImagenUrl" class="img-fluid rounded-start object-fit-cover w-100" height="300"
+                 alt="Portada de @Model.Titulo" />
+        </div>
+        <div class="col-md-9">
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Título</dt>
+                    <dd class="col-sm-8">@Model.Titulo</dd>
+
+                    <dt class="col-sm-4">Autor</dt>
+                    <dd class="col-sm-8">@Model.NombreAutor</dd>
+
+                    <dt class="col-sm-4">ISBN</dt>
+                    <dd class="col-sm-8">@Model.Isbn</dd>
+
+                    <dt class="col-sm-4">Año de publicación</dt>
+                    <dd class="col-sm-8">@Model.AnioPublicacion</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post" class="d-flex gap-2 mt-4">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

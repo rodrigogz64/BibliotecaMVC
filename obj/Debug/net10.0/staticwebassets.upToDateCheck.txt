@@ -1,5 +1,11 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\cien-anios-de-soledad.jpg
+wwwroot\images\ficciones.jpg
+wwwroot\images\la-casa-de-los-espiritus.jpg
+wwwroot\images\la-ciudad-y-los-perros.jpg
+wwwroot\images\rayuela.jpg
+wwwroot\images\sin-portada.svg
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -123,3 +129,4 @@ C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\lib\jquery\dist\jquery.slim.min.js
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\lib\jquery\dist\jquery.slim.min.map
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\lib\jquery\LICENSE.txt
+C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\wwwroot\images\sin-portada.svg
