@@ -21,7 +21,6 @@ C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\scopedcss\bundle\BibliotecaMVC.styles.css
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\scopedcss\projectbundle\BibliotecaMVC.bundle.scp.css
-C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\compressed\1clyn8z30k-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\compressed\pvz5heplim-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\compressed\4i56l1hmhg-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\compressed\s28igsasyt-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -97,4 +96,4 @@ C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\ref\BibliotecaMVC.dll
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\BibliotecaMVC.sourcelink.json
 C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\compressed\nyxa18m05c-{0}-ji9q26is80-ji9q26is80.gz
-C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\Rodrigo\Documents\Tareas UEES\Programacion web frontend 2\BibliotecaMVC\obj\Debug\net10.0\compressed\1clyn8z30k-{0}-cr792t47k0-cr792t47k0.gz

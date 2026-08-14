@@ -1,8 +1,655 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1>Sistema de gestión de biblioteca</h1>
-    <p>Bienvenidos al sistema desarrollado con ASP.Net Core MVC.</p>
+@* ============================================================
+   ACTIVIDAD 1 y 3 — Página Inicio con Bootstrap 5, temática de
+   Biblioteca Virtual (libros, autores, categorías y servicios).
+   ACTIVIDAD 5 — Componentes extra: Carousel, Accordion, Modal,
+   Alerts y Badges.
+   ============================================================ *@
+
+@* ---------- COMPONENTE: ALERT (descartable) ---------- *@
+<div class="alert alert-primary alert-dismissible fade show d-flex align-items-center gap-3" role="alert">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" class="flex-shrink-0" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 16v-4M12 8h.01" />
+    </svg>
+    <div>
+        <strong>Horario extendido:</strong> durante el período de exámenes la sala de lectura permanece abierta
+        hasta las 22:00. ¡Aprovecha para estudiar con nosotros!
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar aviso"></button>
+</div>
+
+@* ---------- SECCIÓN HERO (Grid + Botones + Input group) ---------- *@
+<section class="hero-inicio p-4 p-md-5 mb-5 rounded-3 text-white">
+    <div class="row align-items-center g-4 position-relative">
+        <div class="col-lg-7">
+            <span class="badge rounded-pill text-bg-warning mb-3">Biblioteca Virtual UEES</span>
+            <h1 class="display-4 fw-bold lh-sm">Miles de libros a un clic de distancia</h1>
+            <p class="lead my-4">
+                Consulta el catálogo, descubre nuevos autores, reserva tu próxima lectura y gestiona
+                tus préstamos desde cualquier dispositivo, las 24 horas del día.
+            </p>
+
+            <form class="mb-4" asp-controller="Libros" asp-action="Index" method="get" role="search">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text bg-white border-0" id="etiqueta-buscar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
+                        </svg>
+                    </span>
+                    <input type="search" name="busqueda" class="form-control border-0"
+                           placeholder="Buscar por título, autor o ISBN…" aria-label="Buscar en el catálogo"
+                           aria-describedby="etiqueta-buscar" />
+                    <button class="btn btn-warning fw-semibold" type="submit">Buscar</button>
+                </div>
+            </form>
+
+            <div class="d-grid gap-2 d-sm-flex flex-sm-wrap">
+                <a class="btn btn-success btn-lg px-4" asp-controller="Libros" asp-action="Index">Ver catálogo</a>
+                <a class="btn btn-outline-light btn-lg px-4" asp-controller="Autores" asp-action="Index">Explorar autores</a>
+                <button type="button" class="btn btn-light btn-lg px-4" data-bs-toggle="modal" data-bs-target="#modalCarne">
+                    Solicitar carné
+                </button>
+            </div>
+        </div>
+
+        <div class="col-lg-5 d-none d-lg-block text-center">
+            <img src="~/images/cien-anios-de-soledad.jpg" class="img-fluid rounded-3 shadow-lg portada-hero"
+                 alt="Portada del libro Cien años de soledad" width="260" />
+        </div>
+    </div>
+</section>
+
+@* ---------- ESTADÍSTICAS (Grid + Cards) ---------- *@
+<section class="mb-5" aria-labelledby="titulo-cifras">
+    <h2 id="titulo-cifras" class="visually-hidden">La biblioteca en cifras</h2>
+    <div class="row row-cols-2 row-cols-md-4 g-3 text-center">
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="display-6 fw-bold text-primary mb-0">5.280</p>
+                    <p class="text-body-secondary mb-0">Libros en catálogo</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="display-6 fw-bold text-primary mb-0">1.140</p>
+                    <p class="text-body-secondary mb-0">Autores registrados</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="display-6 fw-bold text-primary mb-0">24</p>
+                    <p class="text-body-secondary mb-0">Categorías</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <p class="display-6 fw-bold text-primary mb-0">3.900</p>
+                    <p class="text-body-secondary mb-0">Socios activos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ---------- COMPONENTE: CAROUSEL ---------- *@
+<section class="mb-5" aria-labelledby="titulo-carrusel">
+    <h2 id="titulo-carrusel" class="h3 mb-1">Recomendados del mes</h2>
+    <p class="text-body-secondary mb-4">Una selección de nuestro equipo de bibliotecarios.</p>
+
+    <div id="carruselDestacados" class="carousel slide carousel-dark bg-body-tertiary rounded-3 p-4 p-md-5"
+         data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carruselDestacados" data-bs-slide-to="0"
+                    class="active" aria-current="true" aria-label="Recomendado 1"></button>
+            <button type="button" data-bs-target="#carruselDestacados" data-bs-slide-to="1"
+                    aria-label="Recomendado 2"></button>
+            <button type="button" data-bs-target="#carruselDestacados" data-bs-slide-to="2"
+                    aria-label="Recomendado 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row g-4 align-items-center px-md-5 pb-4">
+                    <div class="col-8 col-sm-5 col-md-4 mx-auto mx-md-0">
+                        <img src="~/images/cien-anios-de-soledad.jpg" class="img-fluid rounded shadow"
+                             alt="Portada de Cien años de soledad" />
+                    </div>
+                    <div class="col-md-8">
+                        <span class="badge text-bg-secondary mb-2">Gabriel García Márquez</span>
+                        <h3 class="h4">Cien años de soledad</h3>
+                        <p class="mb-3">
+                            La saga de la familia Buendía en el pueblo de Macondo: la obra cumbre del realismo
+                            mágico y una puerta de entrada obligatoria a la literatura latinoamericana.
+                        </p>
+                        <p class="mb-3">
+                            <span class="badge rounded-pill text-bg-primary">Novela</span>
+                            <span class="badge rounded-pill text-bg-light text-dark">1967</span>
+                            <span class="badge rounded-pill bg-success">Disponible</span>
+                        </p>
+                        <a class="btn btn-primary" asp-controller="Libros" asp-action="Index">Ver en el catálogo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="row g-4 align-items-center px-md-5 pb-4">
+                    <div class="col-8 col-sm-5 col-md-4 mx-auto mx-md-0">
+                        <img src="~/images/la-casa-de-los-espiritus.jpg" class="img-fluid rounded shadow"
+                             alt="Portada de La casa de los espíritus" />
+                    </div>
+                    <div class="col-md-8">
+                        <span class="badge text-bg-secondary mb-2">Isabel Allende</span>
+                        <h3 class="h4">La casa de los espíritus</h3>
+                        <p class="mb-3">
+                            Cuatro generaciones de la familia Trueba atraviesan un siglo de convulsiones políticas
+                            y familiares. Una novela sobre la memoria, el amor y la resistencia.
+                        </p>
+                        <p class="mb-3">
+                            <span class="badge rounded-pill text-bg-primary">Novela</span>
+                            <span class="badge rounded-pill text-bg-light text-dark">1982</span>
+                            <span class="badge rounded-pill bg-success">Disponible</span>
+                        </p>
+                        <a class="btn btn-primary" asp-controller="Libros" asp-action="Index">Ver en el catálogo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <div class="row g-4 align-items-center px-md-5 pb-4">
+                    <div class="col-8 col-sm-5 col-md-4 mx-auto mx-md-0">
+                        <img src="~/images/ficciones.jpg" class="img-fluid rounded shadow"
+                             alt="Portada de Ficciones" />
+                    </div>
+                    <div class="col-md-8">
+                        <span class="badge text-bg-secondary mb-2">Jorge Luis Borges</span>
+                        <h3 class="h4">Ficciones</h3>
+                        <p class="mb-3">
+                            Laberintos, bibliotecas infinitas y espejos. Los cuentos que redefinieron lo que
+                            un relato breve puede llegar a ser.
+                        </p>
+                        <p class="mb-3">
+                            <span class="badge rounded-pill text-bg-primary">Cuento</span>
+                            <span class="badge rounded-pill text-bg-light text-dark">1944</span>
+                            <span class="badge rounded-pill bg-danger">Prestado</span>
+                        </p>
+                        <a class="btn btn-primary" asp-controller="Libros" asp-action="Index">Ver en el catálogo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* En móvil se ocultan las flechas (ocupan el 15% de cada lado y taparían el texto);
+           ahí se navega con los indicadores o deslizando el dedo. *@
+        <button class="carousel-control-prev d-none d-md-flex" type="button" data-bs-target="#carruselDestacados" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next d-none d-md-flex" type="button" data-bs-target="#carruselDestacados" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
+    </div>
+</section>
+
+@* ---------- NOVEDADES (Grid + Cards + Badges + Botones) ---------- *@
+<section class="mb-5" aria-labelledby="titulo-novedades">
+    <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-4">
+        <h2 id="titulo-novedades" class="h3 mb-0">Novedades en el catálogo</h2>
+        <a class="btn btn-outline-primary" asp-controller="Libros" asp-action="Index">Ver todos</a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+        <div class="col">
+            <article class="card h-100 shadow-sm">
+                <img src="~/images/rayuela.jpg" class="card-img-top object-fit-cover" height="300"
+                     alt="Portada de Rayuela" />
+                <div class="card-body">
+                    <h3 class="card-title h5">Rayuela</h3>
+                    <h4 class="card-subtitle h6 mb-3 text-body-secondary">Julio Cortázar</h4>
+                    <p class="card-text"><small class="text-body-secondary">Novela · 1963</small></p>
+                    <span class="badge bg-danger">Prestado</span>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button type="button" class="btn btn-sm btn-info w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalCarne">Reservar</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="col">
+            <article class="card h-100 shadow-sm">
+                <img src="~/images/la-ciudad-y-los-perros.jpg" class="card-img-top object-fit-cover" height="300"
+                     alt="Portada de La ciudad y los perros" />
+                <div class="card-body">
+                    <h3 class="card-title h5">La ciudad y los perros</h3>
+                    <h4 class="card-subtitle h6 mb-3 text-body-secondary">Mario Vargas Llosa</h4>
+                    <p class="card-text"><small class="text-body-secondary">Novela · 1963</small></p>
+                    <span class="badge bg-success">Disponible</span>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button type="button" class="btn btn-sm btn-info w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalCarne">Reservar</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="col">
+            <article class="card h-100 shadow-sm">
+                <img src="~/images/ficciones.jpg" class="card-img-top object-fit-cover" height="300"
+                     alt="Portada de Ficciones" />
+                <div class="card-body">
+                    <h3 class="card-title h5">Ficciones</h3>
+                    <h4 class="card-subtitle h6 mb-3 text-body-secondary">Jorge Luis Borges</h4>
+                    <p class="card-text"><small class="text-body-secondary">Cuento · 1944</small></p>
+                    <span class="badge bg-danger">Prestado</span>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button type="button" class="btn btn-sm btn-info w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalCarne">Reservar</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="col">
+            <article class="card h-100 shadow-sm">
+                <img src="~/images/la-casa-de-los-espiritus.jpg" class="card-img-top object-fit-cover" height="300"
+                     alt="Portada de La casa de los espíritus" />
+                <div class="card-body">
+                    <h3 class="card-title h5">La casa de los espíritus</h3>
+                    <h4 class="card-subtitle h6 mb-3 text-body-secondary">Isabel Allende</h4>
+                    <p class="card-text"><small class="text-body-secondary">Novela · 1982</small></p>
+                    <span class="badge bg-success">Disponible</span>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <button type="button" class="btn btn-sm btn-info w-100"
+                            data-bs-toggle="modal" data-bs-target="#modalCarne">Reservar</button>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+@* ---------- CATEGORÍAS (Badges) ---------- *@
+<section class="mb-5" aria-labelledby="titulo-categorias">
+    <h2 id="titulo-categorias" class="h3 mb-1">Explora por categoría</h2>
+    <p class="text-body-secondary mb-3">Nuestro fondo bibliográfico está organizado en 24 categorías temáticas.</p>
+    <div class="d-flex flex-wrap gap-2">
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-primary fs-6 text-decoration-none">Novela</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-success fs-6 text-decoration-none">Poesía</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-danger fs-6 text-decoration-none">Historia</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-warning fs-6 text-decoration-none">Ciencia</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-info fs-6 text-decoration-none">Tecnología</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-secondary fs-6 text-decoration-none">Infantil</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-dark fs-6 text-decoration-none">Arte</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-primary fs-6 text-decoration-none">Biografía</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-success fs-6 text-decoration-none">Derecho</a>
+        <a asp-controller="Home" asp-action="Categorias" class="badge rounded-pill text-bg-info fs-6 text-decoration-none">Salud</a>
+    </div>
+</section>
+
+@* ---------- SERVICIOS BIBLIOTECARIOS (Grid + Cards) ---------- *@
+<section class="mb-5" aria-labelledby="titulo-servicios">
+    <h2 id="titulo-servicios" class="h3 mb-1">Servicios bibliotecarios</h2>
+    <p class="text-body-secondary mb-4">Todo lo que la biblioteca pone a tu disposición.</p>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <span class="icono-servicio mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                        </svg>
+                    </span>
+                    <h3 class="card-title h5">Préstamo a domicilio</h3>
+                    <p class="card-text text-body-secondary">
+                        Llévate hasta 3 libros por 15 días, renovables una vez si nadie los ha reservado.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <span class="icono-servicio mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg>
+                    </span>
+                    <h3 class="card-title h5">Sala de lectura</h3>
+                    <p class="card-text text-body-secondary">
+                        120 puestos individuales y 8 cabinas de estudio en grupo, con reserva previa desde el portal.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <span class="icono-servicio mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <path d="M8 21h8M12 17v4" />
+                        </svg>
+                    </span>
+                    <h3 class="card-title h5">Biblioteca digital</h3>
+                    <p class="card-text text-body-secondary">
+                        Más de 2.000 libros electrónicos y bases de datos académicas accesibles desde casa.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <span class="icono-servicio mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="18" rx="2" />
+                            <path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4" />
+                        </svg>
+                    </span>
+                    <h3 class="card-title h5">Reserva en línea</h3>
+                    <p class="card-text text-body-secondary">
+                        Aparta un ejemplar prestado y recibe un aviso en cuanto vuelva a estar disponible.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <span class="icono-servicio mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                            <circle cx="9" cy="7" r="4" />
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                    </span>
+                    <h3 class="card-title h5">Clubes de lectura</h3>
+                    <p class="card-text text-body-secondary">
+                        Tertulias mensuales de narrativa, poesía y ensayo, abiertas a toda la comunidad.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body">
+                    <span class="icono-servicio mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0" />
+                            <path d="M12 20h.01" />
+                        </svg>
+                    </span>
+                    <h3 class="card-title h5">Wi-Fi y equipos</h3>
+                    <p class="card-text text-body-secondary">
+                        Red inalámbrica gratuita, 30 computadoras de consulta y servicio de impresión.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ---------- AUTORES DESTACADOS (Grid + Cards + List group) ---------- *@
+<section class="mb-5" aria-labelledby="titulo-autores">
+    <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-4">
+        <h2 id="titulo-autores" class="h3 mb-0">Autores destacados</h2>
+        <a class="btn btn-outline-primary" asp-controller="Autores" asp-action="Index">Ver todos</a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm text-center">
+                        <div class="card-body">
+                            <span class="avatar-autor mb-3">GM</span>
+                            <h3 class="card-title h6 mb-1">Gabriel García Márquez</h3>
+                            <p class="card-text"><small class="text-body-secondary">Colombia · 1927</small></p>
+                            <span class="badge bg-success">Activo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm text-center">
+                        <div class="card-body">
+                            <span class="avatar-autor mb-3">IA</span>
+                            <h3 class="card-title h6 mb-1">Isabel Allende</h3>
+                            <p class="card-text"><small class="text-body-secondary">Chile · 1942</small></p>
+                            <span class="badge bg-success">Activo</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100 border-0 shadow-sm text-center">
+                        <div class="card-body">
+                            <span class="avatar-autor mb-3">MV</span>
+                            <h3 class="card-title h6 mb-1">Mario Vargas Llosa</h3>
+                            <p class="card-text"><small class="text-body-secondary">Perú · 1936</small></p>
+                            <span class="badge bg-success">Activo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-transparent fw-semibold">Los más leídos este mes</div>
+                <ol class="list-group list-group-flush list-group-numbered">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-semibold">Cien años de soledad</div>
+                            <small class="text-body-secondary">Gabriel García Márquez</small>
+                        </div>
+                        <span class="badge text-bg-primary rounded-pill">312</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-semibold">Rayuela</div>
+                            <small class="text-body-secondary">Julio Cortázar</small>
+                        </div>
+                        <span class="badge text-bg-primary rounded-pill">248</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-semibold">Ficciones</div>
+                            <small class="text-body-secondary">Jorge Luis Borges</small>
+                        </div>
+                        <span class="badge text-bg-primary rounded-pill">205</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                            <div class="fw-semibold">La casa de los espíritus</div>
+                            <small class="text-body-secondary">Isabel Allende</small>
+                        </div>
+                        <span class="badge text-bg-primary rounded-pill">187</span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ---------- COMPONENTE: ACCORDION ---------- *@
+<section class="mb-5" aria-labelledby="titulo-faq">
+    <h2 id="titulo-faq" class="h3 mb-4">Preguntas frecuentes</h2>
+
+    <div class="accordion shadow-sm" id="acordeonFaq">
+        <div class="accordion-item">
+            <h3 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                    ¿Cómo me afilio a la biblioteca?
+                </button>
+            </h3>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#acordeonFaq">
+                <div class="accordion-body">
+                    Presenta tu cédula y una foto tamaño carné en el mostrador de circulación, o llena el
+                    formulario en línea desde el botón <strong>Solicitar carné</strong>. La afiliación es
+                    gratuita para estudiantes y personal de la universidad.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                    ¿Cuántos libros puedo llevarme a la vez?
+                </button>
+            </h3>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#acordeonFaq">
+                <div class="accordion-body">
+                    Hasta <strong>3 ejemplares</strong> simultáneos por 15 días. Los libros de consulta y las
+                    obras de referencia solo pueden usarse dentro de la sala de lectura.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                    ¿Puedo renovar un préstamo?
+                </button>
+            </h3>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#acordeonFaq">
+                <div class="accordion-body">
+                    Sí, una vez por 15 días adicionales, siempre que el título no esté reservado por otro
+                    usuario. La renovación se hace desde el módulo de <strong>Préstamos</strong> del portal.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                    ¿Qué pasa si devuelvo un libro con retraso?
+                </button>
+            </h3>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#acordeonFaq">
+                <div class="accordion-body">
+                    Se suspende el derecho de préstamo un día por cada día de retraso. En caso de pérdida o
+                    daño, el usuario debe reponer el ejemplar con uno de la misma edición.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
+                    ¿Cuál es el horario de atención?
+                </button>
+            </h3>
+            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#acordeonFaq">
+                <div class="accordion-body">
+                    De lunes a viernes de 08:00 a 20:00 y sábados de 09:00 a 14:00. En época de exámenes la
+                    sala de lectura extiende su horario hasta las 22:00.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ---------- LLAMADA A LA ACCIÓN (Card + Input group) ---------- *@
+<section class="mb-4">
+    <div class="card border-0 shadow-sm text-bg-primary">
+        <div class="card-body p-4 p-md-5">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <h2 class="h3 card-title">Recibe nuestro boletín de novedades</h2>
+                    <p class="card-text mb-0">
+                        Cada mes te enviamos las nuevas adquisiciones, las reseñas del club de lectura y
+                        la agenda de actividades culturales.
+                    </p>
+                </div>
+                <div class="col-lg-5">
+                    <form>
+                        <label for="correoBoletin" class="form-label">Correo electrónico</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="correoBoletin"
+                                   placeholder="tucorreo@@uees.edu.ec" />
+                            <button class="btn btn-warning fw-semibold" type="submit">Suscribirme</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@* ---------- COMPONENTE: MODAL ---------- *@
+<div class="modal fade" id="modalCarne" tabindex="-1" aria-labelledby="tituloModalCarne" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title h5" id="tituloModalCarne">Solicitar carné de biblioteca</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-body-secondary">
+                    Completa tus datos y pasa a retirar tu carné por el mostrador de circulación.
+                </p>
+                <div class="mb-3">
+                    <label for="carneNombre" class="form-label">Nombre completo</label>
+                    <input type="text" class="form-control" id="carneNombre" placeholder="Nombres y apellidos" />
+                </div>
+                <div class="mb-3">
+                    <label for="carneCedula" class="form-label">Cédula</label>
+                    <input type="text" class="form-control" id="carneCedula" placeholder="0900000000" />
+                </div>
+                <div class="mb-3">
+                    <label for="carneCorreo" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="carneCorreo" placeholder="tucorreo@@uees.edu.ec" />
+                </div>
+                <div class="mb-3">
+                    <label for="carneTipo" class="form-label">Tipo de usuario</label>
+                    <select class="form-select" id="carneTipo">
+                        <option selected>Estudiante</option>
+                        <option>Docente</option>
+                        <option>Personal administrativo</option>
+                        <option>Comunidad externa</option>
+                    </select>
+                </div>
+                <p class="form-text mb-0">
+                    Este formulario es una demostración de la interfaz: todavía no envía información al servidor.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Enviar solicitud</button>
+            </div>
+        </div>
+    </div>
 </div>

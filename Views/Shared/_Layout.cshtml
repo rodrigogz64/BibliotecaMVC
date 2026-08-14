@@ -1,10 +1,18 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+@functions {
+    // Indica si el enlace del menú corresponde a la página que se está mostrando.
+    private bool EsActual(string controlador, string accion)
+    {
+        return string.Equals(ViewContext.RouteData.Values["controller"]?.ToString(), controlador, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(ViewContext.RouteData.Values["action"]?.ToString(), accion, StringComparison.OrdinalIgnoreCase);
+    }
+}
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Biblioteca Virtual: catálogo de libros, autores, categorías y servicios bibliotecarios en línea." />
     <title>@ViewData["Title"] - BibliotecaMVC</title>
-    <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BibliotecaMVC.styles.css" asp-append-version="true" />
@@ -21,25 +29,39 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                            <a class="nav-link text-dark @(EsActual("Home", "Index") ? "active fw-semibold" : null)"
+                               aria-current="@(EsActual("Home", "Index") ? "page" : null)"
+                               asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Libros" asp-action="Index">Libros</a>
+                            <a class="nav-link text-dark @(EsActual("Libros", "Index") ? "active fw-semibold" : null)"
+                               aria-current="@(EsActual("Libros", "Index") ? "page" : null)"
+                               asp-area="" asp-controller="Libros" asp-action="Index">Libros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Autores" asp-action="Index">Autores</a>
+                            <a class="nav-link text-dark @(EsActual("Autores", "Index") ? "active fw-semibold" : null)"
+                               aria-current="@(EsActual("Autores", "Index") ? "page" : null)"
+                               asp-area="" asp-controller="Autores" asp-action="Index">Autores</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Categorias">Categorías</a>
+                            <a class="nav-link text-dark @(EsActual("Home", "Categorias") ? "active fw-semibold" : null)"
+                               aria-current="@(EsActual("Home", "Categorias") ? "page" : null)"
+                               asp-area="" asp-controller="Home" asp-action="Categorias">Categorías</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Usuarios">Usuarios</a>
+                            <a class="nav-link text-dark @(EsActual("Home", "Usuarios") ? "active fw-semibold" : null)"
+                               aria-current="@(EsActual("Home", "Usuarios") ? "page" : null)"
+                               asp-area="" asp-controller="Home" asp-action="Usuarios">Usuarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Prestamos">Préstamos</a>
+                            <a class="nav-link text-dark @(EsActual("Home", "Prestamos") ? "active fw-semibold" : null)"
+                               aria-current="@(EsActual("Home", "Prestamos") ? "page" : null)"
+                               asp-area="" asp-controller="Home" asp-action="Prestamos">Préstamos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AcercaDe">Acerca de</a>
+                            <a class="nav-link text-dark @(EsActual("Home", "AcercaDe") ? "active fw-semibold" : null)"
+                               aria-current="@(EsActual("Home", "AcercaDe") ? "page" : null)"
+                               asp-area="" asp-controller="Home" asp-action="AcercaDe">Acerca de</a>
                         </li>
                     </ul>
                 </div>

@@ -2,7 +2,305 @@
     ViewData["Title"] = "Acerca de";
 }
 
-<div class="text-center">
-    <h1>Acerca de</h1>
-    <p>Sistema de gestión de biblioteca desarrollado con ASP.NET Core MVC.</p>
-</div>
+@* ============================================================
+   ACTIVIDAD 2 y 3 — Página "Acerca de" construida con HTML5
+   semántico (article, header, nav, section, aside, figure,
+   blockquote, time, address, details, dl, footer) y estilizada
+   con CSS3 propio desde wwwroot/css/site.css.
+   Aquí NO se usan componentes de Bootstrap a propósito: todo el
+   diseño proviene de las clases .acerca-* definidas en site.css.
+   ============================================================ *@
+
+<article class="acerca">
+
+    @* ---------- ENCABEZADO ---------- *@
+    <header class="acerca-hero">
+        <p class="acerca-kicker">Biblioteca Virtual UEES</p>
+        <h1 class="acerca-titulo">Un lugar donde los libros encuentran lectores</h1>
+        <p class="acerca-lead">
+            Somos una biblioteca universitaria que combina el fondo bibliográfico tradicional con un
+            catálogo digital abierto. Nuestro propósito es que cualquier persona de la comunidad pueda
+            encontrar, leer y llevarse el libro que necesita, esté donde esté.
+        </p>
+        <ul class="acerca-datos-clave">
+            <li><strong>5.280</strong><span>libros catalogados</span></li>
+            <li><strong>1.140</strong><span>autores</span></li>
+            <li><strong>24</strong><span>categorías</span></li>
+            <li><strong>3.900</strong><span>socios activos</span></li>
+        </ul>
+    </header>
+
+    @* ---------- ÍNDICE DE CONTENIDO ---------- *@
+    <nav class="acerca-indice" aria-label="Contenido de la página">
+        <h2>En esta página</h2>
+        <ol>
+            <li><a href="#historia">Nuestra historia</a></li>
+            <li><a href="#mision">Misión, visión y valores</a></li>
+            <li><a href="#colecciones">Colecciones y categorías</a></li>
+            <li><a href="#servicios">Servicios bibliotecarios</a></li>
+            <li><a href="#equipo">Nuestro equipo</a></li>
+            <li><a href="#contacto">Contacto y horarios</a></li>
+        </ol>
+    </nav>
+
+    @* ---------- HISTORIA ---------- *@
+    <section id="historia" class="acerca-seccion">
+        <h2>Nuestra historia</h2>
+        <p>
+            La biblioteca abrió sus puertas en <time datetime="2005">2005</time> con poco más de
+            ochocientos volúmenes donados por docentes fundadores. Dos décadas después conserva la misma
+            idea que la puso en marcha: que el acceso al conocimiento no debería depender del bolsillo
+            de nadie.
+        </p>
+
+        <ol class="acerca-linea-tiempo">
+            <li>
+                <time datetime="2005">2005</time>
+                <h3>Fundación</h3>
+                <p>Se inaugura la sala de lectura con 800 volúmenes y un solo bibliotecario.</p>
+            </li>
+            <li>
+                <time datetime="2011">2011</time>
+                <h3>Primer catálogo informatizado</h3>
+                <p>Se cataloga el fondo completo y se abre la consulta en línea desde el campus.</p>
+            </li>
+            <li>
+                <time datetime="2018">2018</time>
+                <h3>Colección digital</h3>
+                <p>Se suman 2.000 libros electrónicos y el acceso remoto a bases de datos académicas.</p>
+            </li>
+            <li>
+                <time datetime="2026">2026</time>
+                <h3>Biblioteca Virtual</h3>
+                <p>Se lanza este portal, que unifica catálogo, préstamos, reservas y actividades culturales.</p>
+            </li>
+        </ol>
+    </section>
+
+    @* ---------- MISIÓN, VISIÓN Y VALORES ---------- *@
+    <section id="mision" class="acerca-seccion">
+        <h2>Misión, visión y valores</h2>
+
+        <div class="acerca-grid">
+            <article class="acerca-tarjeta">
+                <h3>Misión</h3>
+                <p>
+                    Garantizar el acceso libre, ordenado y oportuno a la información que la comunidad
+                    universitaria necesita para estudiar, investigar y crear.
+                </p>
+            </article>
+            <article class="acerca-tarjeta">
+                <h3>Visión</h3>
+                <p>
+                    Ser en <time datetime="2030">2030</time> la biblioteca universitaria de referencia del
+                    país en gestión de colecciones híbridas, físicas y digitales.
+                </p>
+            </article>
+            <article class="acerca-tarjeta">
+                <h3>Valores</h3>
+                <p>
+                    Acceso abierto, respeto por el lector, cuidado del patrimonio bibliográfico y
+                    acompañamiento a quien recién empieza a investigar.
+                </p>
+            </article>
+        </div>
+
+        <blockquote class="acerca-cita">
+            <p>Siempre imaginé que el Paraíso sería algún tipo de biblioteca.</p>
+            <footer><cite>Jorge Luis Borges</cite></footer>
+        </blockquote>
+    </section>
+
+    @* ---------- COLECCIONES ---------- *@
+    <section id="colecciones" class="acerca-seccion">
+        <h2>Colecciones y categorías</h2>
+        <p>
+            El fondo está organizado en 24 categorías temáticas. Estas son las cinco con mayor número de
+            ejemplares y de préstamos durante el último año académico.
+        </p>
+
+        <div class="acerca-columnas">
+            <figure class="acerca-figura">
+                <img src="~/images/rayuela.jpg" alt="Portada de Rayuela, de Julio Cortázar" />
+                <figcaption>
+                    <em>Rayuela</em> (1963), de Julio Cortázar, uno de los títulos más solicitados de la
+                    colección de narrativa latinoamericana.
+                </figcaption>
+            </figure>
+
+            <dl class="acerca-definiciones">
+                <dt>Literatura</dt>
+                <dd>Narrativa, poesía, teatro y ensayo literario. Es la colección más consultada, con 1.480 títulos.</dd>
+
+                <dt>Ciencia y tecnología</dt>
+                <dd>Matemáticas, física, computación e ingeniería, con reposición anual de las ediciones vigentes.</dd>
+
+                <dt>Historia y ciencias sociales</dt>
+                <dd>Historia del Ecuador y de América Latina, sociología, economía y ciencia política.</dd>
+
+                <dt>Derecho</dt>
+                <dd>Códigos actualizados, jurisprudencia y doctrina, en préstamo restringido a sala de lectura.</dd>
+
+                <dt>Salud</dt>
+                <dd>Medicina, enfermería y nutrición, más el acceso a revistas indexadas del área.</dd>
+            </dl>
+        </div>
+
+        <aside class="acerca-dato">
+            <h3>¿Sabías que…?</h3>
+            <p>
+                El libro más antiguo del fondo es una edición de <em>Don Quijote de la Mancha</em> de
+                <time datetime="1911">1911</time>, donada por la familia de un docente fundador. Se conserva
+                en la sala de fondo reservado y solo se consulta con cita previa.
+            </p>
+        </aside>
+    </section>
+
+    @* ---------- SERVICIOS ---------- *@
+    <section id="servicios" class="acerca-seccion">
+        <h2>Servicios bibliotecarios</h2>
+        <p>Despliega cada servicio para conocer sus condiciones de uso.</p>
+
+        <div class="acerca-servicios">
+            <details open>
+                <summary>Préstamo a domicilio</summary>
+                <p>
+                    Hasta 3 ejemplares por 15 días, renovables una vez si el título no está reservado.
+                    Requiere carné vigente y no tener sanciones activas.
+                </p>
+            </details>
+
+            <details>
+                <summary>Sala de lectura y cabinas de estudio</summary>
+                <p>
+                    120 puestos individuales y 8 cabinas para trabajo en grupo, reservables por bloques de
+                    dos horas desde el portal.
+                </p>
+            </details>
+
+            <details>
+                <summary>Biblioteca digital</summary>
+                <p>
+                    Más de 2.000 libros electrónicos y bases de datos académicas con acceso remoto mediante
+                    las credenciales institucionales.
+                </p>
+            </details>
+
+            <details>
+                <summary>Formación de usuarios</summary>
+                <p>
+                    Talleres de búsqueda bibliográfica, gestión de referencias y normas de citación
+                    <abbr title="American Psychological Association">APA</abbr>, dictados cada inicio de semestre.
+                </p>
+            </details>
+
+            <details>
+                <summary>Clubes de lectura y actividades culturales</summary>
+                <p>
+                    Tertulias mensuales de narrativa, poesía y ensayo, presentaciones de libros y encuentros
+                    con autores. La entrada es libre.
+                </p>
+            </details>
+        </div>
+    </section>
+
+    @* ---------- EQUIPO ---------- *@
+    <section id="equipo" class="acerca-seccion">
+        <h2>Nuestro equipo</h2>
+        <p>Ocho personas sostienen el trabajo diario de catalogación, atención y difusión.</p>
+
+        <ul class="acerca-equipo">
+            <li>
+                <figure>
+                    <span class="acerca-avatar" aria-hidden="true">MC</span>
+                    <figcaption>
+                        <strong>María Cedeño</strong>
+                        <span>Directora de la biblioteca</span>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <span class="acerca-avatar" aria-hidden="true">JR</span>
+                    <figcaption>
+                        <strong>Jorge Reyes</strong>
+                        <span>Catalogación y proceso técnico</span>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <span class="acerca-avatar" aria-hidden="true">AL</span>
+                    <figcaption>
+                        <strong>Ana Luna</strong>
+                        <span>Circulación y préstamos</span>
+                    </figcaption>
+                </figure>
+            </li>
+            <li>
+                <figure>
+                    <span class="acerca-avatar" aria-hidden="true">DV</span>
+                    <figcaption>
+                        <strong>Daniel Vera</strong>
+                        <span>Colección digital y sistemas</span>
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+    </section>
+
+    @* ---------- CONTACTO Y HORARIOS ---------- *@
+    <section id="contacto" class="acerca-seccion">
+        <h2>Contacto y horarios</h2>
+
+        <div class="acerca-columnas">
+            <address class="acerca-direccion">
+                <strong>Biblioteca Virtual UEES</strong><br />
+                Campus Universitario, edificio B, planta baja<br />
+                Km 2,5 vía La Puntilla — Samborondón, Ecuador<br />
+                <a href="tel:+59342835630">+593 4 283 5630</a><br />
+                <a href="mailto:biblioteca@@uees.edu.ec">biblioteca@@uees.edu.ec</a>
+            </address>
+
+            <table class="acerca-horarios">
+                <caption>Horario de atención al público</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Días</th>
+                        <th scope="col">Horario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Lunes a viernes</th>
+                        <td>08:00 – 20:00</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Sábados</th>
+                        <td>09:00 – 14:00</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Domingos y feriados</th>
+                        <td>Cerrado</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Época de exámenes</th>
+                        <td><mark>Sala de lectura hasta las 22:00</mark></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    @* ---------- PIE DEL ARTÍCULO ---------- *@
+    <footer class="acerca-pie">
+        <p>
+            Portal desarrollado con ASP.NET Core <abbr title="Modelo–Vista–Controlador">MVC</abbr>,
+            HTML5, CSS3 y Bootstrap 5.
+        </p>
+        <p>
+            Última actualización: <time datetime="2026-08-14">14 de agosto de 2026</time>
+        </p>
+    </footer>
+
+</article>

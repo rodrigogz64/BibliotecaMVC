@@ -29,3 +29,834 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* ==========================================================================
+   BIBLIOTECA VIRTUAL — ESTILOS PERSONALIZADOS (CSS3)
+   Actividad 2: estilos propios para la página "Acerca de".
+   Actividad 4: diseño responsivo con media queries (al final del archivo).
+
+   Índice:
+     1. Variables de tema (custom properties)
+     2. Apoyos para la página Inicio
+     3. Página "Acerca de"
+     4. Media queries
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. VARIABLES DE TEMA  —  CSS custom properties
+   -------------------------------------------------------------------------- */
+:root {
+  --biblio-primario: #1b4965;
+  --biblio-secundario: #2c7da0;
+  --biblio-acento: #f4a261;
+  --biblio-tinta: #22303c;
+  --biblio-apagado: #5d6d7b;
+  --biblio-suave: #f1f5f9;
+  --biblio-borde: #dfe6ec;
+  --biblio-radio: 0.9rem;
+  --biblio-sombra: 0 0.5rem 1.5rem rgba(27, 73, 101, 0.12);
+  --biblio-sombra-alta: 0 1rem 2.25rem rgba(27, 73, 101, 0.2);
+  --biblio-transicion: 0.25s ease;
+  --biblio-degradado: linear-gradient(135deg, var(--biblio-primario) 0%, var(--biblio-secundario) 100%);
+}
+
+/* Desplazamiento suave al usar los enlaces internos del índice de "Acerca de" */
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. APOYOS PARA LA PÁGINA INICIO
+   (el grueso del diseño de Inicio lo aporta Bootstrap; aquí solo van los
+   detalles que Bootstrap no cubre)
+   -------------------------------------------------------------------------- */
+
+/* Cabecera principal con degradado y adorno radial */
+.hero-inicio {
+  background: var(--biblio-degradado);
+  box-shadow: var(--biblio-sombra);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-inicio::after {
+  content: "";
+  position: absolute;
+  inset-block-start: -35%;
+  inset-inline-end: -12%;
+  width: 28rem;
+  height: 28rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+.portada-hero {
+  transform: rotate(3deg);
+  transition: transform var(--biblio-transicion);
+}
+
+.portada-hero:hover {
+  transform: rotate(0deg) scale(1.03);
+}
+
+/* Icono circular de las tarjetas de servicios */
+.icono-servicio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: var(--biblio-degradado);
+  color: #fff;
+  box-shadow: var(--biblio-sombra);
+}
+
+/* Avatar con iniciales de los autores destacados */
+.avatar-autor {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--biblio-degradado);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  box-shadow: var(--biblio-sombra);
+}
+
+/* Elevación suave de las tarjetas al pasar el puntero */
+.card {
+  transition: transform var(--biblio-transicion), box-shadow var(--biblio-transicion);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--biblio-sombra-alta) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. PÁGINA "ACERCA DE"  —  todo el diseño se resuelve aquí, sin Bootstrap
+   -------------------------------------------------------------------------- */
+.acerca {
+  color: var(--biblio-tinta);
+  line-height: 1.7;
+}
+
+/* ---------- 3.1 Encabezado ---------- */
+.acerca-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--biblio-degradado);
+  color: #fff;
+  border-radius: var(--biblio-radio);
+  padding: clamp(1.75rem, 5vw, 3.5rem);
+  box-shadow: var(--biblio-sombra);
+}
+
+.acerca-hero::after {
+  content: "";
+  position: absolute;
+  inset-block-start: -40%;
+  inset-inline-end: -10%;
+  width: 26rem;
+  height: 26rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+.acerca-hero > * {
+  position: relative;
+}
+
+.acerca-kicker {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--biblio-acento);
+}
+
+.acerca-titulo {
+  margin: 0 0 1rem;
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.acerca-lead {
+  max-width: 62ch;
+  margin: 0;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.acerca-datos-clave {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 4vw, 3rem);
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.acerca-datos-clave li {
+  display: flex;
+  flex-direction: column;
+}
+
+.acerca-datos-clave strong {
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.acerca-datos-clave span {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---------- 3.2 Índice de contenido ---------- */
+.acerca-indice {
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  background-color: var(--biblio-suave);
+  border-left: 5px solid var(--biblio-acento);
+  border-radius: var(--biblio-radio);
+}
+
+.acerca-indice h2 {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--biblio-apagado);
+}
+
+.acerca-indice ol {
+  counter-reset: indice;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.acerca-indice li {
+  counter-increment: indice;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.acerca-indice li::before {
+  content: counter(indice, decimal-leading-zero);
+  flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 50%;
+  background-color: var(--biblio-primario);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.acerca-indice a {
+  color: var(--biblio-primario);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--biblio-transicion);
+}
+
+.acerca-indice a:hover,
+.acerca-indice a:focus-visible {
+  color: var(--biblio-secundario);
+  text-decoration: underline;
+}
+
+/* ---------- 3.3 Secciones ---------- */
+.acerca-seccion {
+  margin: 3rem 0;
+  scroll-margin-top: 1.5rem;
+}
+
+.acerca-seccion > h2 {
+  position: relative;
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700;
+  color: var(--biblio-primario);
+}
+
+.acerca-seccion > h2::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  width: 3.5rem;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--biblio-degradado);
+}
+
+.acerca-seccion h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--biblio-primario);
+}
+
+/* ---------- 3.4 Línea de tiempo ---------- */
+.acerca-linea-tiempo {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0 0 0 1.75rem;
+  border-left: 2px solid var(--biblio-borde);
+}
+
+.acerca-linea-tiempo li {
+  position: relative;
+  padding-bottom: 1.75rem;
+}
+
+.acerca-linea-tiempo li:last-child {
+  padding-bottom: 0;
+}
+
+.acerca-linea-tiempo li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -2.4rem;
+  inset-block-start: 0.35rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: var(--biblio-acento);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--biblio-borde);
+}
+
+.acerca-linea-tiempo time {
+  display: inline-block;
+  padding: 0.15rem 0.65rem;
+  border-radius: 999px;
+  background-color: var(--biblio-suave);
+  color: var(--biblio-primario);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.acerca-linea-tiempo h3 {
+  margin: 0.4rem 0 0.25rem;
+}
+
+.acerca-linea-tiempo p {
+  margin: 0;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 3.5 Rejilla de tarjetas (CSS Grid) ---------- */
+.acerca-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.acerca-tarjeta {
+  padding: 1.5rem;
+  background-color: #fff;
+  border: 1px solid var(--biblio-borde);
+  border-top: 4px solid var(--biblio-acento);
+  border-radius: var(--biblio-radio);
+  box-shadow: var(--biblio-sombra);
+  transition: transform var(--biblio-transicion), box-shadow var(--biblio-transicion);
+}
+
+.acerca-tarjeta:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--biblio-sombra-alta);
+}
+
+.acerca-tarjeta h3 {
+  margin-top: 0;
+}
+
+.acerca-tarjeta p {
+  margin-bottom: 0;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 3.6 Cita destacada ---------- */
+.acerca-cita {
+  position: relative;
+  margin: 2.5rem 0 0;
+  padding: 2rem 2rem 1.5rem 4rem;
+  background-color: var(--biblio-suave);
+  border-radius: var(--biblio-radio);
+}
+
+.acerca-cita::before {
+  content: "\201C";
+  position: absolute;
+  inset-block-start: 0.25rem;
+  inset-inline-start: 1rem;
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--biblio-acento);
+}
+
+.acerca-cita p {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-style: italic;
+  color: var(--biblio-primario);
+}
+
+.acerca-cita cite {
+  font-style: normal;
+  font-weight: 700;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 3.7 Bloques a dos columnas ---------- */
+.acerca-columnas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+.acerca-figura {
+  margin: 0;
+}
+
+.acerca-figura img {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--biblio-radio);
+  box-shadow: var(--biblio-sombra);
+}
+
+.acerca-figura figcaption {
+  margin-top: 0.85rem;
+  padding-left: 0.85rem;
+  border-left: 3px solid var(--biblio-acento);
+  font-size: 0.9rem;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 3.8 Lista de definiciones ---------- */
+.acerca-definiciones {
+  margin: 0;
+}
+
+.acerca-definiciones dt {
+  margin-top: 1.1rem;
+  font-weight: 700;
+  color: var(--biblio-primario);
+}
+
+.acerca-definiciones dt:first-child {
+  margin-top: 0;
+}
+
+.acerca-definiciones dd {
+  margin: 0.25rem 0 0;
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--biblio-borde);
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 3.9 Recuadro de dato curioso (aside) ---------- */
+.acerca-dato {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #fff7ed 0%, var(--biblio-suave) 100%);
+  border-left: 5px solid var(--biblio-acento);
+  border-radius: var(--biblio-radio);
+}
+
+.acerca-dato h3 {
+  margin-top: 0;
+}
+
+.acerca-dato p {
+  margin-bottom: 0;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 3.10 Servicios desplegables (details / summary) ---------- */
+.acerca-servicios {
+  margin-top: 1.5rem;
+}
+
+.acerca-servicios details {
+  margin-bottom: 0.75rem;
+  background-color: #fff;
+  border: 1px solid var(--biblio-borde);
+  border-radius: var(--biblio-radio);
+  overflow: hidden;
+}
+
+.acerca-servicios summary {
+  position: relative;
+  padding: 1rem 3rem 1rem 1.25rem;
+  font-weight: 600;
+  color: var(--biblio-primario);
+  cursor: pointer;
+  list-style: none;
+  transition: background-color var(--biblio-transicion);
+}
+
+.acerca-servicios summary::-webkit-details-marker {
+  display: none;
+}
+
+.acerca-servicios summary:hover {
+  background-color: var(--biblio-suave);
+}
+
+/* Flecha construida con bordes y girada con transform */
+.acerca-servicios summary::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 1.25rem;
+  inset-block-start: 1.25rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid var(--biblio-secundario);
+  border-bottom: 2px solid var(--biblio-secundario);
+  transform: rotate(45deg);
+  transition: transform var(--biblio-transicion);
+}
+
+.acerca-servicios details[open] summary {
+  background-color: var(--biblio-suave);
+}
+
+.acerca-servicios details[open] summary::after {
+  transform: rotate(-135deg);
+}
+
+.acerca-servicios details p {
+  margin: 0;
+  padding: 0 1.25rem 1.25rem;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 3.11 Equipo ---------- */
+.acerca-equipo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  text-align: center;
+}
+
+.acerca-equipo figure {
+  margin: 0;
+}
+
+.acerca-avatar {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: 0 auto 0.85rem;
+  border-radius: 50%;
+  background: var(--biblio-degradado);
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: var(--biblio-sombra);
+}
+
+.acerca-equipo figcaption strong {
+  display: block;
+  color: var(--biblio-primario);
+}
+
+.acerca-equipo figcaption span {
+  font-size: 0.85rem;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 3.12 Contacto y horarios ---------- */
+.acerca-direccion {
+  margin: 0;
+  padding: 1.5rem;
+  background-color: var(--biblio-suave);
+  border-radius: var(--biblio-radio);
+  font-style: normal;
+  line-height: 1.9;
+}
+
+.acerca-direccion a {
+  color: var(--biblio-primario);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.acerca-direccion a:hover,
+.acerca-direccion a:focus-visible {
+  text-decoration: underline;
+}
+
+.acerca-horarios {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: var(--biblio-radio);
+  overflow: hidden;
+  box-shadow: var(--biblio-sombra);
+}
+
+.acerca-horarios caption {
+  caption-side: top;
+  padding-bottom: 0.65rem;
+  font-weight: 700;
+  text-align: left;
+  color: var(--biblio-primario);
+}
+
+.acerca-horarios th,
+.acerca-horarios td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--biblio-borde);
+}
+
+.acerca-horarios thead th {
+  background-color: var(--biblio-primario);
+  color: #fff;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.acerca-horarios tbody tr:nth-child(even) {
+  background-color: var(--biblio-suave);
+}
+
+.acerca-horarios tbody tr:last-child th,
+.acerca-horarios tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.acerca-horarios mark {
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.3rem;
+  background-color: var(--biblio-acento);
+  color: var(--biblio-tinta);
+}
+
+/* ---------- 3.13 Pie del artículo ---------- */
+.acerca-pie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--biblio-borde);
+  font-size: 0.9rem;
+  color: var(--biblio-apagado);
+}
+
+.acerca-pie p {
+  margin: 0;
+}
+
+
+/* ==========================================================================
+   4. MEDIA QUERIES  —  Actividad 4: diseño responsivo
+   Se usan los mismos puntos de corte de Bootstrap 5 para que el CSS propio
+   y el framework cambien de disposición al mismo tiempo.
+   ========================================================================== */
+
+/* ---------- 4.1 Teléfonos (hasta 575.98 px) ---------- */
+@media (max-width: 575.98px) {
+  .acerca-hero {
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .acerca-hero::after {
+    display: none; /* se oculta el adorno para no cargar la pantalla pequeña */
+  }
+
+  .acerca-lead {
+    margin-inline: auto;
+  }
+
+  .acerca-datos-clave {
+    justify-content: center;
+    gap: 1rem 2rem;
+  }
+
+  .acerca-datos-clave li {
+    align-items: center;
+  }
+
+  .acerca-indice ol {
+    grid-template-columns: 1fr; /* el índice pasa a una sola columna */
+  }
+
+  .acerca-seccion {
+    margin: 2rem 0;
+  }
+
+  .acerca-cita {
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  .acerca-cita::before {
+    position: static;
+    display: block;
+    font-size: 3rem;
+  }
+
+  .acerca-figura img {
+    max-width: 100%;
+  }
+
+  .acerca-columnas,
+  .acerca-grid {
+    gap: 1.25rem;
+  }
+
+  .acerca-horarios th,
+  .acerca-horarios td {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .acerca-pie {
+    flex-direction: column;
+  }
+
+  /* Inicio: el adorno del hero también estorba en pantallas angostas */
+  .hero-inicio::after {
+    display: none;
+  }
+}
+
+/* ---------- 4.2 Tabletas (576 px – 991.98 px) ---------- */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .acerca-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .acerca-equipo {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .acerca-columnas {
+    grid-template-columns: 1fr; /* imagen y texto uno debajo del otro */
+  }
+
+  .acerca-figura img {
+    max-width: 260px;
+  }
+}
+
+/* ---------- 4.3 Escritorio (desde 992 px) ---------- */
+@media (min-width: 992px) {
+  .acerca-hero {
+    padding: 3.5rem 4rem;
+  }
+
+  .acerca-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .acerca-equipo {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .acerca-columnas {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: 2.5rem;
+  }
+
+  .acerca-seccion {
+    margin: 4rem 0;
+  }
+}
+
+/* ---------- 4.4 Accesibilidad: usuarios que prefieren menos movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .card,
+  .card:hover,
+  .acerca-tarjeta,
+  .acerca-tarjeta:hover,
+  .portada-hero,
+  .portada-hero:hover,
+  .acerca-servicios summary::after {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- 4.5 Impresión ---------- */
+@media print {
+  /* Solo la cabecera de navegación del layout, no los <header> del contenido */
+  body > header,
+  footer.footer,
+  .acerca-indice,
+  .alert,
+  .carousel-control-prev,
+  .carousel-control-next,
+  .carousel-indicators {
+    display: none !important;
+  }
+
+  body {
+    margin-bottom: 0;
+    color: #000;
+  }
+
+  .acerca-hero,
+  .acerca-tarjeta,
+  .acerca-horarios,
+  .card {
+    box-shadow: none !important;
+  }
+
+  .acerca-hero {
+    background: none;
+    color: #000;
+    border: 1px solid #000;
+  }
+
+  .acerca-servicios details {
+    break-inside: avoid;
+  }
+}
