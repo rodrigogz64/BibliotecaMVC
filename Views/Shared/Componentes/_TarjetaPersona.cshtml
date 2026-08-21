@@ -1,0 +1,29 @@
+@model TarjetaPersonaViewModel
+
+@*
+    COMPONENTE REUTILIZABLE — Tarjeta de persona.
+
+    Uso:
+        <partial name="Componentes/_TarjetaPersona" model="miPersona" />
+
+    Se usa en Inicio (autores destacados del catálogo) y en "Acerca de"
+    (equipo de la biblioteca).
+*@
+<article class="tarjeta tarjeta-persona">
+    <span class="medallon medallon--grande" aria-hidden="true">@Model.Iniciales</span>
+
+    <h3 class="tarjeta__titulo">@Model.Nombre</h3>
+    <p class="tarjeta-persona__rol">@Model.Rol</p>
+
+    @if (Model.TieneDetalle)
+    {
+        <p class="tarjeta-persona__detalle">@Model.Detalle</p>
+    }
+
+    @if (Model.Etiqueta is not null)
+    {
+        <div class="tarjeta__pie">
+            <partial name="Componentes/_Etiqueta" model="Model.Etiqueta" />
+        </div>
+    }
+</article>

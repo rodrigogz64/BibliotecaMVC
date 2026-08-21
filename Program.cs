@@ -11,6 +11,7 @@ builder.Services.AddScoped<IAutorService, AutorService>();
 builder.Services.AddScoped<ILibroRepository, LibroRepository>();
 builder.Services.AddScoped<ILibroService, LibroService>();
 builder.Services.AddScoped<IAlmacenamientoImagenes, AlmacenamientoImagenesLocal>();
+builder.Services.AddScoped<IContenidoPortalService, ContenidoPortalService>();
 
 var app = builder.Build();
 

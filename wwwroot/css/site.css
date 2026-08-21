@@ -1,84 +1,661 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
-}
-
 /* ==========================================================================
-   BIBLIOTECA VIRTUAL — ESTILOS PERSONALIZADOS (CSS3)
-   Actividad 2: estilos propios para la página "Acerca de".
-   Actividad 4: diseño responsivo con media queries (al final del archivo).
+   BIBLIOTECA VIRTUAL — HOJA DE ESTILOS PRINCIPAL (CSS3)
 
-   Índice:
-     1. Variables de tema (custom properties)
-     2. Apoyos para la página Inicio
-     3. Página "Acerca de"
-     4. Media queries
+   Organización del archivo (de lo general a lo particular):
+
+     1. Base de la plantilla
+     2. Variables de tema            (custom properties)
+     3. Disposición con FLEXBOX      → Actividad 1
+     4. Rejillas con CSS GRID        → Actividad 2
+     5. Componentes reutilizables    → Actividad 4
+     6. Página Inicio
+     7. Página "Acerca de"
+     8. Diseño adaptable             → Actividad 3 (media queries)
+
+   Criterios: una sola fuente de verdad para colores y separaciones (sección 2),
+   clases genéricas reutilizables en cualquier página en lugar de estilos
+   sueltos por página, y disposiciones que arrancan en una columna (teléfono) y
+   ganan columnas al crecer la pantalla.
    ========================================================================== */
 
 
 /* --------------------------------------------------------------------------
-   1. VARIABLES DE TEMA  —  CSS custom properties
+   1. BASE DE LA PLANTILLA
    -------------------------------------------------------------------------- */
-:root {
-  --biblio-primario: #1b4965;
-  --biblio-secundario: #2c7da0;
-  --biblio-acento: #f4a261;
-  --biblio-tinta: #22303c;
-  --biblio-apagado: #5d6d7b;
-  --biblio-suave: #f1f5f9;
-  --biblio-borde: #dfe6ec;
-  --biblio-radio: 0.9rem;
-  --biblio-sombra: 0 0.5rem 1.5rem rgba(27, 73, 101, 0.12);
-  --biblio-sombra-alta: 0 1rem 2.25rem rgba(27, 73, 101, 0.2);
-  --biblio-transicion: 0.25s ease;
-  --biblio-degradado: linear-gradient(135deg, var(--biblio-primario) 0%, var(--biblio-secundario) 100%);
+html {
+  position: relative;
+  min-height: 100%;
+  font-size: 14px;
+  scroll-behavior: smooth; /* enlaces internos del índice de "Acerca de" */
 }
 
-/* Desplazamiento suave al usar los enlaces internos del índice de "Acerca de" */
-html {
-  scroll-behavior: smooth;
+body {
+  margin-bottom: 60px; /* deja sitio al pie fijo del layout */
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+  text-align: start;
 }
 
 
 /* --------------------------------------------------------------------------
-   2. APOYOS PARA LA PÁGINA INICIO
-   (el grueso del diseño de Inicio lo aporta Bootstrap; aquí solo van los
-   detalles que Bootstrap no cubre)
+   2. VARIABLES DE TEMA
+   Cambiar un valor aquí repinta las dos páginas y todos los componentes.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta */
+  --biblio-primario: #1b4965;
+  --biblio-secundario: #2c7da0;
+  --biblio-acento: #f4a261;
+  --biblio-exito: #2a7f62;
+  --biblio-peligro: #b3453b;
+  --biblio-tinta: #22303c;
+  --biblio-apagado: #5d6d7b;
+  --biblio-suave: #f1f5f9;
+  --biblio-borde: #dfe6ec;
+
+  /* Formas y movimiento */
+  --biblio-radio: 0.9rem;
+  --biblio-radio-corto: 0.55rem;
+  --biblio-sombra: 0 0.5rem 1.5rem rgba(27, 73, 101, 0.12);
+  --biblio-sombra-alta: 0 1rem 2.25rem rgba(27, 73, 101, 0.2);
+  --biblio-transicion: 0.25s ease;
+  --biblio-degradado: linear-gradient(135deg, var(--biblio-primario) 0%, var(--biblio-secundario) 100%);
+
+  /* Separaciones: las comparten los contenedores flex y los grid */
+  --biblio-hueco: 1.5rem;
+  --biblio-hueco-corto: 0.75rem;
+  --biblio-hueco-largo: 2rem;
+}
+
+
+/* --------------------------------------------------------------------------
+   3. DISPOSICIÓN CON FLEXBOX  —  Actividad 1
+   Clases de una dimensión (una fila o una columna) cuyos hijos se reparten el
+   espacio disponible. Todas envuelven en varias líneas, así que funcionan
+   igual en teléfono y en escritorio casi sin media queries.
+   -------------------------------------------------------------------------- */
+
+/* ---------- 3.1 Contenedor flexible genérico ---------- */
+.flexible {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--biblio-hueco);
+}
+
+.flexible--centrado { align-items: center; }
+.flexible--separado { justify-content: space-between; }
+.flexible--compacto { gap: var(--biblio-hueco-corto); }
+
+/* Hijo que absorbe el espacio sobrante de la fila */
+.flexible__crece {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ---------- 3.2 Encabezado de sección: título a un lado, acción al otro ---------- */
+.encabezado-seccion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--biblio-hueco-corto) var(--biblio-hueco);
+  margin-bottom: var(--biblio-hueco);
+}
+
+.encabezado-seccion__texto {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+/* ---------- 3.3 Grupo de botones ---------- */
+.grupo-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--biblio-hueco-corto);
+}
+
+/* En teléfono los botones ocupan toda la fila: son más fáciles de pulsar */
+.grupo-acciones > .btn { flex: 1 1 auto; }
+
+/* ---------- 3.4 Nube de etiquetas ---------- */
+.nube-etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- 3.5 Cinta de cifras ---------- */
+.cinta-cifras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--biblio-hueco-corto);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cada cifra parte de 9rem y crece hasta repartirse la fila por igual */
+.cinta-cifras > li {
+  display: flex;
+  flex: 1 1 9rem;
+}
+
+/* Variante para fondos oscuros (cabecera de "Acerca de") */
+.cinta-cifras--clara {
+  gap: var(--biblio-hueco);
+  margin-top: var(--biblio-hueco-largo);
+  padding-top: var(--biblio-hueco);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* ---------- 3.6 Bloque dividido: contenido principal + panel lateral ---------- */
+.bloque-dividido {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--biblio-hueco);
+  align-items: stretch;
+}
+
+.bloque-dividido__principal {
+  flex: 2 1 22rem;
+  min-width: 0;
+}
+
+/* La rejilla interior ocupa todo el alto del bloque, así las tarjetas quedan
+   a la misma altura que el panel lateral */
+.bloque-dividido__principal > .rejilla { height: 100%; }
+
+.bloque-dividido__lateral {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+/* ---------- 3.7 Fila de contenido con imagen (hero, carrusel, panel destacado) ---------- */
+.fila-medios {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--biblio-hueco) var(--biblio-hueco-largo);
+}
+
+.fila-medios__texto {
+  flex: 1 1 18rem;
+  min-width: 0;
+}
+
+.fila-medios__imagen {
+  flex: 0 1 11rem;
+  margin: 0 auto; /* también anula el margen propio de <figure> */
+}
+
+.fila-medios__imagen img {
+  width: 100%;
+  height: auto;
+}
+
+
+/* --------------------------------------------------------------------------
+   4. REJILLAS CON CSS GRID  —  Actividad 2
+   Clases de dos dimensiones: colocan filas y columnas a la vez.
+   -------------------------------------------------------------------------- */
+
+/* ---------- 4.1 Rejilla automática ----------
+   auto-fit + minmax() decide solo cuántas columnas caben, así que una única
+   declaración cubre teléfono, tableta y escritorio. El ancho mínimo de cada
+   columna se ajusta por rejilla con la variable --rejilla-minimo. */
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--rejilla-minimo, 16rem), 1fr));
+  gap: var(--biblio-hueco);
+}
+
+.rejilla--estrecha { --rejilla-minimo: 11rem; }
+.rejilla--ancha { --rejilla-minimo: 20rem; }
+
+/* Para usar la rejilla sobre un <ul>/<ol> sin perder la semántica de lista */
+.rejilla--lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rejilla--lista > li { display: flex; }
+
+/* ---------- 4.2 Mosaico "La biblioteca en un vistazo" ----------
+   Rejilla con áreas nombradas: el HTML conserva un orden lógico de lectura y
+   es el CSS quien decide dónde cae cada panel en cada tamaño de pantalla
+   (las otras dos disposiciones están en la sección 8). */
+.mosaico {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "destacado"
+    "categorias"
+    "autor"
+    "agenda";
+  gap: var(--biblio-hueco);
+}
+
+.mosaico__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--biblio-hueco-corto);
+  padding: 1.5rem;
+  background-color: #fff;
+  border: 1px solid var(--biblio-borde);
+  border-radius: var(--biblio-radio);
+  box-shadow: var(--biblio-sombra);
+}
+
+.mosaico__panel h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--biblio-primario);
+}
+
+.mosaico__panel p {
+  margin: 0;
+  color: var(--biblio-apagado);
+}
+
+/* Panel principal: ocupa el doble de ancho y de alto que los demás */
+.mosaico__destacado {
+  grid-area: destacado;
+  justify-content: center;
+  background: var(--biblio-degradado);
+  border-color: transparent;
+  color: #fff;
+}
+
+.mosaico__destacado h3,
+.mosaico__destacado p {
+  color: inherit;
+}
+
+.mosaico__destacado h3 { font-size: clamp(1.2rem, 2.5vw, 1.6rem); }
+
+/* El texto del panel destacado también es una columna flex: el espaciado lo
+   da el gap y así ningún elemento necesita márgenes propios */
+.mosaico__destacado .fila-medios__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--biblio-hueco-corto);
+}
+
+.mosaico__portada img {
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--biblio-radio-corto);
+  box-shadow: var(--biblio-sombra-alta);
+}
+
+.mosaico__categorias { grid-area: categorias; }
+
+.mosaico__autor {
+  grid-area: autor;
+  align-items: center;
+  text-align: center;
+}
+
+.mosaico__agenda { grid-area: agenda; }
+
+
+/* --------------------------------------------------------------------------
+   5. COMPONENTES REUTILIZABLES  —  Actividad 4
+   Cada bloque de esta sección corresponde a una vista parcial de
+   Views/Shared/Componentes/ y no depende de la página que lo muestre.
+   -------------------------------------------------------------------------- */
+
+/* ---------- 5.1 Sección, título y subtítulo ---------- */
+.seccion {
+  margin-block: clamp(2.5rem, 6vw, 4rem);
+  scroll-margin-top: 1.5rem;
+}
+
+.titulo-seccion {
+  position: relative;
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.6rem;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 700;
+  color: var(--biblio-primario);
+}
+
+.titulo-seccion::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  width: 3.5rem;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--biblio-degradado);
+}
+
+.subtitulo-seccion {
+  max-width: 68ch;
+  margin: 0;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 5.2 Medallón: círculo con un icono o unas iniciales ---------- */
+.medallon {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: var(--biblio-degradado);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  box-shadow: var(--biblio-sombra);
+}
+
+.medallon--grande {
+  width: 4.5rem;
+  height: 4.5rem;
+  font-size: 1.35rem;
+}
+
+
+/* ---------- 5.3 Icono tomado del sprite SVG ---------- */
+.icono {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.medallon--grande .icono {
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+/* ---------- 5.4 Etiqueta (chip) ---------- */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform var(--biblio-transicion), filter var(--biblio-transicion);
+}
+
+a.etiqueta:hover,
+a.etiqueta:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(0.94);
+}
+
+.etiqueta--primario {
+  background-color: rgba(27, 73, 101, 0.1);
+  color: var(--biblio-primario);
+}
+
+.etiqueta--secundario {
+  background-color: rgba(44, 125, 160, 0.14);
+  color: #205f7a;
+}
+
+.etiqueta--acento {
+  background-color: rgba(244, 162, 97, 0.24);
+  color: #8a4b12;
+}
+
+.etiqueta--exito {
+  background-color: rgba(42, 127, 98, 0.14);
+  color: var(--biblio-exito);
+}
+
+.etiqueta--peligro {
+  background-color: rgba(179, 69, 59, 0.14);
+  color: var(--biblio-peligro);
+}
+
+.etiqueta--neutro {
+  background-color: var(--biblio-suave);
+  color: var(--biblio-apagado);
+}
+
+.etiqueta--clara {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* ---------- 5.5 Tarjeta base ----------
+   Es un contenedor flex en columna: el texto crece, el pie queda pegado abajo
+   y todas las tarjetas de una misma rejilla terminan con la misma altura. */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--biblio-hueco-corto);
+  height: 100%;
+  padding: 1.5rem;
+  background-color: #fff;
+  border: 1px solid var(--biblio-borde);
+  border-radius: var(--biblio-radio);
+  box-shadow: var(--biblio-sombra);
+  transition: transform var(--biblio-transicion), box-shadow var(--biblio-transicion);
+}
+
+.tarjeta:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--biblio-sombra-alta);
+}
+
+.tarjeta--acento { border-top: 4px solid var(--biblio-acento); }
+
+.tarjeta__titulo {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--biblio-primario);
+}
+
+/* Crece para empujar el pie hacia abajo */
+.tarjeta__texto {
+  flex: 1 1 auto;
+  margin: 0;
+  color: var(--biblio-apagado);
+}
+
+.tarjeta__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--biblio-hueco-corto);
+  margin-top: auto;
+}
+
+.tarjeta__enlace {
+  color: var(--biblio-secundario);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.tarjeta__enlace:hover,
+.tarjeta__enlace:focus-visible {
+  color: var(--biblio-primario);
+  text-decoration: underline;
+}
+
+/* ---------- 5.6 Tarjeta de persona ---------- */
+.tarjeta-persona {
+  align-items: center;
+  text-align: center;
+}
+
+.tarjeta-persona .tarjeta__pie { justify-content: center; }
+
+.tarjeta-persona__rol {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--biblio-apagado);
+}
+
+.tarjeta-persona__detalle {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--biblio-secundario);
+}
+
+/* ---------- 5.7 Tarjeta de cifra ---------- */
+.tarjeta-cifra {
+  gap: 0.15rem;
+  width: 100%;
+  padding: 1.25rem 1rem;
+  text-align: center;
+}
+
+.tarjeta-cifra__valor {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--biblio-primario);
+}
+
+.tarjeta-cifra__etiqueta {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--biblio-apagado);
+}
+
+/* La cinta clara reutiliza el mismo componente sobre el degradado del hero */
+.cinta-cifras--clara .tarjeta {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: none;
+}
+
+.cinta-cifras--clara .tarjeta-cifra__valor { color: #fff; }
+
+.cinta-cifras--clara .tarjeta-cifra__etiqueta { color: rgba(255, 255, 255, 0.85); }
+
+/* ---------- 5.8 Lista de datos (nombre / valor) ---------- */
+.lista-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lista-datos li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px dashed var(--biblio-borde);
+}
+
+.lista-datos li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.lista-datos__nombre {
+  font-weight: 600;
+  color: var(--biblio-tinta);
+}
+
+.lista-datos__valor {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: var(--biblio-apagado);
+}
+
+/* ---------- 5.9 Agenda de actividades ---------- */
+.agenda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--biblio-hueco-corto);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.agenda li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--biblio-hueco-corto);
+}
+
+.agenda time {
+  display: grid;
+  place-items: center;
+  flex: 0 0 3.4rem;
+  padding: 0.4rem 0.25rem;
+  border-radius: var(--biblio-radio-corto);
+  background-color: var(--biblio-suave);
+  color: var(--biblio-primario);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.agenda__titulo {
+  display: block;
+  font-weight: 600;
+  color: var(--biblio-tinta);
+}
+
+.agenda__lugar {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--biblio-apagado);
+}
+
+
+/* --------------------------------------------------------------------------
+   6. PÁGINA INICIO
+   El grueso de la disposición ya lo aportan las secciones 3, 4 y 5; aquí
+   quedan solo los detalles propios de esta página.
    -------------------------------------------------------------------------- */
 
 /* Cabecera principal con degradado y adorno radial */
 .hero-inicio {
-  background: var(--biblio-degradado);
-  box-shadow: var(--biblio-sombra);
   position: relative;
   overflow: hidden;
+  background: var(--biblio-degradado);
+  box-shadow: var(--biblio-sombra);
 }
 
 .hero-inicio::after {
@@ -93,6 +670,12 @@ html {
   pointer-events: none;
 }
 
+/* El contenido va por encima del adorno */
+.hero-inicio > * { position: relative; }
+
+/* En el hero la portada puede permitirse más ancho que en el resto de filas */
+.hero-inicio .fila-medios__imagen { flex: 0 1 15rem; }
+
 .portada-hero {
   transform: rotate(3deg);
   transition: transform var(--biblio-transicion);
@@ -102,36 +685,7 @@ html {
   transform: rotate(0deg) scale(1.03);
 }
 
-/* Icono circular de las tarjetas de servicios */
-.icono-servicio {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 3.25rem;
-  height: 3.25rem;
-  border-radius: 50%;
-  background: var(--biblio-degradado);
-  color: #fff;
-  box-shadow: var(--biblio-sombra);
-}
-
-/* Avatar con iniciales de los autores destacados */
-.avatar-autor {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  background: var(--biblio-degradado);
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.25rem;
-  letter-spacing: 0.05em;
-  box-shadow: var(--biblio-sombra);
-}
-
-/* Elevación suave de las tarjetas al pasar el puntero */
+/* Elevación suave de las tarjetas de Bootstrap (novedades, boletín) */
 .card {
   transition: transform var(--biblio-transicion), box-shadow var(--biblio-transicion);
 }
@@ -143,14 +697,16 @@ html {
 
 
 /* --------------------------------------------------------------------------
-   3. PÁGINA "ACERCA DE"  —  todo el diseño se resuelve aquí, sin Bootstrap
+   7. PÁGINA "ACERCA DE"
+   Diseño resuelto con CSS propio (sin componentes de Bootstrap), apoyado en
+   los sistemas y componentes de las secciones 3 a 5.
    -------------------------------------------------------------------------- */
 .acerca {
   color: var(--biblio-tinta);
   line-height: 1.7;
 }
 
-/* ---------- 3.1 Encabezado ---------- */
+/* ---------- 7.1 Encabezado ---------- */
 .acerca-hero {
   position: relative;
   overflow: hidden;
@@ -173,9 +729,7 @@ html {
   pointer-events: none;
 }
 
-.acerca-hero > * {
-  position: relative;
-}
+.acerca-hero > * { position: relative; }
 
 .acerca-kicker {
   margin: 0 0 0.75rem;
@@ -200,34 +754,7 @@ html {
   color: rgba(255, 255, 255, 0.92);
 }
 
-.acerca-datos-clave {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(1rem, 4vw, 3rem);
-  list-style: none;
-  margin: 2rem 0 0;
-  padding: 1.5rem 0 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.acerca-datos-clave li {
-  display: flex;
-  flex-direction: column;
-}
-
-.acerca-datos-clave strong {
-  font-size: 1.75rem;
-  line-height: 1.2;
-}
-
-.acerca-datos-clave span {
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-/* ---------- 3.2 Índice de contenido ---------- */
+/* ---------- 7.2 Índice de contenido ---------- */
 .acerca-indice {
   margin: 2.5rem 0;
   padding: 1.5rem;
@@ -289,39 +816,7 @@ html {
   text-decoration: underline;
 }
 
-/* ---------- 3.3 Secciones ---------- */
-.acerca-seccion {
-  margin: 3rem 0;
-  scroll-margin-top: 1.5rem;
-}
-
-.acerca-seccion > h2 {
-  position: relative;
-  margin: 0 0 1rem;
-  padding-bottom: 0.6rem;
-  font-size: clamp(1.4rem, 3vw, 1.9rem);
-  font-weight: 700;
-  color: var(--biblio-primario);
-}
-
-.acerca-seccion > h2::after {
-  content: "";
-  position: absolute;
-  inset-block-end: 0;
-  inset-inline-start: 0;
-  width: 3.5rem;
-  height: 4px;
-  border-radius: 2px;
-  background: var(--biblio-degradado);
-}
-
-.acerca-seccion h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--biblio-primario);
-}
-
-/* ---------- 3.4 Línea de tiempo ---------- */
+/* ---------- 7.3 Línea de tiempo ---------- */
 .acerca-linea-tiempo {
   list-style: none;
   margin: 2rem 0 0;
@@ -364,6 +859,9 @@ html {
 
 .acerca-linea-tiempo h3 {
   margin: 0.4rem 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--biblio-primario);
 }
 
 .acerca-linea-tiempo p {
@@ -371,39 +869,7 @@ html {
   color: var(--biblio-apagado);
 }
 
-/* ---------- 3.5 Rejilla de tarjetas (CSS Grid) ---------- */
-.acerca-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-.acerca-tarjeta {
-  padding: 1.5rem;
-  background-color: #fff;
-  border: 1px solid var(--biblio-borde);
-  border-top: 4px solid var(--biblio-acento);
-  border-radius: var(--biblio-radio);
-  box-shadow: var(--biblio-sombra);
-  transition: transform var(--biblio-transicion), box-shadow var(--biblio-transicion);
-}
-
-.acerca-tarjeta:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--biblio-sombra-alta);
-}
-
-.acerca-tarjeta h3 {
-  margin-top: 0;
-}
-
-.acerca-tarjeta p {
-  margin-bottom: 0;
-  color: var(--biblio-apagado);
-}
-
-/* ---------- 3.6 Cita destacada ---------- */
+/* ---------- 7.4 Cita destacada ---------- */
 .acerca-cita {
   position: relative;
   margin: 2.5rem 0 0;
@@ -435,11 +901,11 @@ html {
   color: var(--biblio-apagado);
 }
 
-/* ---------- 3.7 Bloques a dos columnas ---------- */
+/* ---------- 7.5 Bloques a dos columnas ---------- */
 .acerca-columnas {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: var(--biblio-hueco-largo);
   align-items: start;
   margin-top: 1.5rem;
 }
@@ -465,7 +931,7 @@ html {
   color: var(--biblio-apagado);
 }
 
-/* ---------- 3.8 Lista de definiciones ---------- */
+/* ---------- 7.6 Lista de definiciones ---------- */
 .acerca-definiciones {
   margin: 0;
 }
@@ -487,7 +953,7 @@ html {
   color: var(--biblio-apagado);
 }
 
-/* ---------- 3.9 Recuadro de dato curioso (aside) ---------- */
+/* ---------- 7.7 Recuadro de dato curioso (aside) ---------- */
 .acerca-dato {
   margin-top: 2rem;
   padding: 1.5rem;
@@ -498,6 +964,9 @@ html {
 
 .acerca-dato h3 {
   margin-top: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--biblio-primario);
 }
 
 .acerca-dato p {
@@ -505,7 +974,7 @@ html {
   color: var(--biblio-apagado);
 }
 
-/* ---------- 3.10 Servicios desplegables (details / summary) ---------- */
+/* ---------- 7.8 Servicios desplegables (details / summary) ---------- */
 .acerca-servicios {
   margin-top: 1.5rem;
 }
@@ -520,6 +989,9 @@ html {
 
 .acerca-servicios summary {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--biblio-hueco-corto);
   padding: 1rem 3rem 1rem 1.25rem;
   font-weight: 600;
   color: var(--biblio-primario);
@@ -534,6 +1006,10 @@ html {
 
 .acerca-servicios summary:hover {
   background-color: var(--biblio-suave);
+}
+
+.acerca-servicios summary .icono {
+  color: var(--biblio-secundario);
 }
 
 /* Flecha construida con bordes y girada con transform */
@@ -564,47 +1040,7 @@ html {
   color: var(--biblio-apagado);
 }
 
-/* ---------- 3.11 Equipo ---------- */
-.acerca-equipo {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.5rem;
-  list-style: none;
-  margin: 1.5rem 0 0;
-  padding: 0;
-  text-align: center;
-}
-
-.acerca-equipo figure {
-  margin: 0;
-}
-
-.acerca-avatar {
-  display: grid;
-  place-items: center;
-  width: 4.5rem;
-  height: 4.5rem;
-  margin: 0 auto 0.85rem;
-  border-radius: 50%;
-  background: var(--biblio-degradado);
-  color: #fff;
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  box-shadow: var(--biblio-sombra);
-}
-
-.acerca-equipo figcaption strong {
-  display: block;
-  color: var(--biblio-primario);
-}
-
-.acerca-equipo figcaption span {
-  font-size: 0.85rem;
-  color: var(--biblio-apagado);
-}
-
-/* ---------- 3.12 Contacto y horarios ---------- */
+/* ---------- 7.9 Contacto y horarios ---------- */
 .acerca-direccion {
   margin: 0;
   padding: 1.5rem;
@@ -673,11 +1109,9 @@ html {
   color: var(--biblio-tinta);
 }
 
-/* ---------- 3.13 Pie del artículo ---------- */
+/* ---------- 7.10 Pie del artículo ---------- */
+/* La disposición la aportan .flexible y .flexible--separado desde la vista */
 .acerca-pie {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
   gap: 0.5rem 1.5rem;
   margin-top: 3rem;
   padding-top: 1.5rem;
@@ -692,46 +1126,49 @@ html {
 
 
 /* ==========================================================================
-   4. MEDIA QUERIES  —  Actividad 4: diseño responsivo
-   Se usan los mismos puntos de corte de Bootstrap 5 para que el CSS propio
-   y el framework cambien de disposición al mismo tiempo.
+   8. DISEÑO ADAPTABLE  —  Actividad 3
+   Se usan los puntos de corte de Bootstrap 5 (576 px, 768 px y 992 px) para
+   que el CSS propio y el framework cambien de disposición al mismo tiempo.
+
+     8.1 Teléfono   (base + ajustes hasta 575.98 px)
+     8.2 Tableta    (desde 576 px)
+     8.3 Tableta    (solo 576 px – 991.98 px)
+     8.4 Tipografía  (desde 768 px)
+     8.5 Escritorio  (desde 992 px)
+     8.6 Accesibilidad
+     8.7 Impresión
    ========================================================================== */
 
-/* ---------- 4.1 Teléfonos (hasta 575.98 px) ---------- */
+/* ---------- 8.1 Teléfono: hasta 575.98 px ---------- */
 @media (max-width: 575.98px) {
+  /* Menos relleno para no desperdiciar ancho en pantallas angostas */
+  .tarjeta,
+  .mosaico__panel {
+    padding: 1.25rem;
+  }
+
+  /* Base algo mayor para que las cifras queden en dos filas de dos y no
+     tres arriba y una sola abajo */
+  .cinta-cifras > li { flex: 1 1 8.5rem; }
+
   .acerca-hero {
     padding: 1.5rem;
     text-align: center;
   }
 
-  .acerca-hero::after {
-    display: none; /* se oculta el adorno para no cargar la pantalla pequeña */
+  /* Los adornos radiales cargan la pantalla pequeña sin aportar nada */
+  .acerca-hero::after,
+  .hero-inicio::after {
+    display: none;
   }
 
-  .acerca-lead {
-    margin-inline: auto;
-  }
+  .acerca-lead { margin-inline: auto; }
 
-  .acerca-datos-clave {
-    justify-content: center;
-    gap: 1rem 2rem;
-  }
+  .cinta-cifras--clara { justify-content: center; }
 
-  .acerca-datos-clave li {
-    align-items: center;
-  }
+  .acerca-indice ol { grid-template-columns: 1fr; }
 
-  .acerca-indice ol {
-    grid-template-columns: 1fr; /* el índice pasa a una sola columna */
-  }
-
-  .acerca-seccion {
-    margin: 2rem 0;
-  }
-
-  .acerca-cita {
-    padding: 1.5rem 1.25rem 1.25rem;
-  }
+  .acerca-cita { padding: 1.5rem 1.25rem 1.25rem; }
 
   .acerca-cita::before {
     position: static;
@@ -739,14 +1176,7 @@ html {
     font-size: 3rem;
   }
 
-  .acerca-figura img {
-    max-width: 100%;
-  }
-
-  .acerca-columnas,
-  .acerca-grid {
-    gap: 1.25rem;
-  }
+  .acerca-figura img { max-width: 100%; }
 
   .acerca-horarios th,
   .acerca-horarios td {
@@ -754,69 +1184,75 @@ html {
     font-size: 0.9rem;
   }
 
-  .acerca-pie {
-    flex-direction: column;
-  }
-
-  /* Inicio: el adorno del hero también estorba en pantallas angostas */
-  .hero-inicio::after {
-    display: none;
-  }
+  .acerca-pie { flex-direction: column; }
 }
 
-/* ---------- 4.2 Tabletas (576 px – 991.98 px) ---------- */
+/* ---------- 8.2 Tableta en adelante: desde 576 px ---------- */
+@media (min-width: 576px) {
+  /* El mosaico pasa a dos columnas: el panel destacado ocupa la fila completa */
+  .mosaico {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "destacado destacado"
+      "categorias autor"
+      "agenda agenda";
+  }
+
+  /* Los botones recuperan su ancho natural, ya no hace falta apilarlos */
+  .grupo-acciones > .btn { flex: 0 1 auto; }
+
+  .fila-medios__imagen { flex: 0 1 13rem; }
+}
+
+/* ---------- 8.3 Solo tableta: 576 px – 991.98 px ---------- */
 @media (min-width: 576px) and (max-width: 991.98px) {
-  .acerca-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  /* Dos columnas de tarjetas, que es lo que se lee cómodamente en tableta */
+  .rejilla { --rejilla-minimo: 15rem; }
 
-  .acerca-equipo {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .rejilla--ancha { --rejilla-minimo: 17rem; }
 
-  .acerca-columnas {
-    grid-template-columns: 1fr; /* imagen y texto uno debajo del otro */
-  }
+  /* Imagen y texto uno debajo del otro para que la foto no quede diminuta */
+  .acerca-columnas { grid-template-columns: 1fr; }
 
-  .acerca-figura img {
-    max-width: 260px;
-  }
+  .acerca-figura img { max-width: 260px; }
 }
 
-/* ---------- 4.3 Escritorio (desde 992 px) ---------- */
+/* ---------- 8.4 Tipografía: algo mayor a partir de tableta ---------- */
+@media (min-width: 768px) {
+  html { font-size: 16px; }
+}
+
+/* ---------- 8.5 Escritorio: desde 992 px ---------- */
 @media (min-width: 992px) {
-  .acerca-hero {
-    padding: 3.5rem 4rem;
-  }
-
-  .acerca-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .acerca-equipo {
+  /* Mosaico completo: el panel destacado ocupa dos columnas y dos filas */
+  .mosaico {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-areas:
+      "destacado destacado categorias autor"
+      "destacado destacado agenda     agenda";
   }
+
+  .mosaico__destacado { padding: 2rem; }
+
+  .acerca-hero { padding: 3.5rem 4rem; }
 
   .acerca-columnas {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
     gap: 2.5rem;
   }
-
-  .acerca-seccion {
-    margin: 4rem 0;
-  }
 }
 
-/* ---------- 4.4 Accesibilidad: usuarios que prefieren menos movimiento ---------- */
+/* ---------- 8.6 Accesibilidad: usuarios que prefieren menos movimiento ---------- */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
 
   .card,
   .card:hover,
-  .acerca-tarjeta,
-  .acerca-tarjeta:hover,
+  .tarjeta,
+  .tarjeta:hover,
+  .etiqueta,
+  a.etiqueta:hover,
+  a.etiqueta:focus-visible,
   .portada-hero,
   .portada-hero:hover,
   .acerca-servicios summary::after {
@@ -825,7 +1261,7 @@ html {
   }
 }
 
-/* ---------- 4.5 Impresión ---------- */
+/* ---------- 8.7 Impresión ---------- */
 @media print {
   /* Solo la cabecera de navegación del layout, no los <header> del contenido */
   body > header,
@@ -844,19 +1280,23 @@ html {
   }
 
   .acerca-hero,
-  .acerca-tarjeta,
   .acerca-horarios,
+  .tarjeta,
+  .mosaico__panel,
   .card {
     box-shadow: none !important;
   }
 
-  .acerca-hero {
+  .acerca-hero,
+  .mosaico__destacado {
     background: none;
     color: #000;
     border: 1px solid #000;
   }
 
-  .acerca-servicios details {
+  .acerca-servicios details,
+  .mosaico__panel,
+  .tarjeta {
     break-inside: avoid;
   }
 }

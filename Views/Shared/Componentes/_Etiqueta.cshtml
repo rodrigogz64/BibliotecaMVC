@@ -1,0 +1,19 @@
+@model EtiquetaViewModel
+
+@*
+    COMPONENTE REUTILIZABLE — Etiqueta (chip).
+
+    Uso:
+        <partial name="Componentes/_Etiqueta" model="miEtiqueta" />
+
+    Si el modelo trae controlador y acción se pinta como enlace navegable;
+    si no, como texto. Los colores salen del modificador .etiqueta--{tono}.
+*@
+@if (Model.EsEnlace)
+{
+    <a class="@Model.ClaseCss" asp-controller="@Model.Controlador" asp-action="@Model.Accion">@Model.Texto</a>
+}
+else
+{
+    <span class="@Model.ClaseCss">@Model.Texto</span>
+}

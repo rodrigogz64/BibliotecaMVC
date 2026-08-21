@@ -1,0 +1,39 @@
+@model TarjetaInfoViewModel
+
+@*
+    COMPONENTE REUTILIZABLE — Tarjeta informativa con icono.
+
+    Uso:
+        <partial name="Componentes/_TarjetaInfo" model="miTarjeta" />
+
+    Se usa en Inicio (servicios bibliotecarios) y en "Acerca de" (misión,
+    visión y valores). El icono, la etiqueta y el enlace son opcionales: la
+    tarjeta se adapta a lo que traiga el modelo.
+*@
+<article class="tarjeta tarjeta--acento">
+    @if (Model.TieneIcono)
+    {
+        <span class="medallon" aria-hidden="true">
+            <svg class="icono" focusable="false"><use href="#icono-@Model.Icono" /></svg>
+        </span>
+    }
+
+    <h3 class="tarjeta__titulo">@Model.Titulo</h3>
+    <p class="tarjeta__texto">@Model.Descripcion</p>
+
+    @if (Model.TienePie)
+    {
+        <div class="tarjeta__pie">
+            @if (Model.Etiqueta is not null)
+            {
+                <partial name="Componentes/_Etiqueta" model="Model.Etiqueta" />
+            }
+            @if (Model.TieneEnlace)
+            {
+                <a class="tarjeta__enlace" asp-controller="@Model.Controlador" asp-action="@Model.Accion">
+                    @Model.EnlaceTexto
+                </a>
+            }
+        </div>
+    }
+</article>

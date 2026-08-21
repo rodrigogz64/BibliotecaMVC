@@ -1,0 +1,16 @@
+@model TarjetaCifraViewModel
+
+@*
+    COMPONENTE REUTILIZABLE — Tarjeta de cifra.
+
+    Uso:
+        <partial name="Componentes/_TarjetaCifra" model="miCifra" />
+
+    Se usa en Inicio y en la cabecera de "Acerca de". Sobre fondos oscuros no
+    hace falta otro modelo: basta con que el contenedor lleve la clase
+    .cinta-cifras--clara y el CSS invierte los colores.
+*@
+<div class="tarjeta tarjeta-cifra">
+    <p class="tarjeta-cifra__valor">@Model.Valor</p>
+    <p class="tarjeta-cifra__etiqueta">@Model.Etiqueta</p>
+</div>

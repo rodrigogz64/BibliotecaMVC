@@ -1,19 +1,32 @@
+@model AcercaDeViewModel
 @{
     ViewData["Title"] = "Acerca de";
 }
 
 @* ============================================================
-   ACTIVIDAD 2 y 3 — Página "Acerca de" construida con HTML5
-   semántico (article, header, nav, section, aside, figure,
-   blockquote, time, address, details, dl, footer) y estilizada
-   con CSS3 propio desde wwwroot/css/site.css.
-   Aquí NO se usan componentes de Bootstrap a propósito: todo el
-   diseño proviene de las clases .acerca-* definidas en site.css.
+   PÁGINA "ACERCA DE" — Biblioteca Virtual
+
+   Construida con HTML5 semántico (article, header, nav, section,
+   aside, figure, blockquote, time, address, details, dl, footer) y
+   estilizada con CSS3 propio desde wwwroot/css/site.css. No se usan
+   componentes de Bootstrap: todo el diseño sale de las clases .acerca-*
+   y de los sistemas compartidos de flexbox, grid y componentes.
+
+   ACTIVIDAD 4 — Componentes visuales reutilizables, definidos en
+   Views/Shared/Componentes/ y usados también en la página Inicio:
+
+     _TarjetaCifra.cshtml    → las cifras de la cabecera
+     _TarjetaInfo.cshtml     → misión, visión y valores
+     _TarjetaPersona.cshtml  → el equipo de la biblioteca
+     _Etiqueta.cshtml        → los chips de estado y categoría
+
+   ACTIVIDAD 3 — Adaptable: .cinta-cifras y .acerca-columnas envuelven
+   solas, y .rejilla decide cuántas columnas caben en cada pantalla.
    ============================================================ *@
 
 <article class="acerca">
 
-    @* ---------- ENCABEZADO ---------- *@
+    @* ---------- ENCABEZADO (Flexbox + componente _TarjetaCifra) ---------- *@
     <header class="acerca-hero">
         <p class="acerca-kicker">Biblioteca Virtual UEES</p>
         <h1 class="acerca-titulo">Un lugar donde los libros encuentran lectores</h1>
@@ -22,11 +35,14 @@
             catálogo digital abierto. Nuestro propósito es que cualquier persona de la comunidad pueda
             encontrar, leer y llevarse el libro que necesita, esté donde esté.
         </p>
-        <ul class="acerca-datos-clave">
-            <li><strong>5.280</strong><span>libros catalogados</span></li>
-            <li><strong>1.140</strong><span>autores</span></li>
-            <li><strong>24</strong><span>categorías</span></li>
-            <li><strong>3.900</strong><span>socios activos</span></li>
+
+        <ul class="cinta-cifras cinta-cifras--clara">
+            @foreach (var cifra in Model.Cifras)
+            {
+                <li>
+                    <partial name="Componentes/_TarjetaCifra" model="cifra" />
+                </li>
+            }
         </ul>
     </header>
 
@@ -44,8 +60,8 @@
     </nav>
 
     @* ---------- HISTORIA ---------- *@
-    <section id="historia" class="acerca-seccion">
-        <h2>Nuestra historia</h2>
+    <section id="historia" class="seccion">
+        <h2 class="titulo-seccion">Nuestra historia</h2>
         <p>
             La biblioteca abrió sus puertas en <time datetime="2005">2005</time> con poco más de
             ochocientos volúmenes donados por docentes fundadores. Dos décadas después conserva la misma
@@ -77,32 +93,18 @@
         </ol>
     </section>
 
-    @* ---------- MISIÓN, VISIÓN Y VALORES ---------- *@
-    <section id="mision" class="acerca-seccion">
-        <h2>Misión, visión y valores</h2>
+    @* ---------- MISIÓN, VISIÓN Y VALORES (CSS Grid + componente _TarjetaInfo) ---------- *@
+    <section id="mision" class="seccion">
+        <h2 class="titulo-seccion">Misión, visión y valores</h2>
+        <p class="subtitulo-seccion">
+            Las tres ideas que ordenan el trabajo diario de la biblioteca.
+        </p>
 
-        <div class="acerca-grid">
-            <article class="acerca-tarjeta">
-                <h3>Misión</h3>
-                <p>
-                    Garantizar el acceso libre, ordenado y oportuno a la información que la comunidad
-                    universitaria necesita para estudiar, investigar y crear.
-                </p>
-            </article>
-            <article class="acerca-tarjeta">
-                <h3>Visión</h3>
-                <p>
-                    Ser en <time datetime="2030">2030</time> la biblioteca universitaria de referencia del
-                    país en gestión de colecciones híbridas, físicas y digitales.
-                </p>
-            </article>
-            <article class="acerca-tarjeta">
-                <h3>Valores</h3>
-                <p>
-                    Acceso abierto, respeto por el lector, cuidado del patrimonio bibliográfico y
-                    acompañamiento a quien recién empieza a investigar.
-                </p>
-            </article>
+        <div class="rejilla mt-4">
+            @foreach (var principio in Model.Principios)
+            {
+                <partial name="Componentes/_TarjetaInfo" model="principio" />
+            }
         </div>
 
         <blockquote class="acerca-cita">
@@ -112,9 +114,9 @@
     </section>
 
     @* ---------- COLECCIONES ---------- *@
-    <section id="colecciones" class="acerca-seccion">
-        <h2>Colecciones y categorías</h2>
-        <p>
+    <section id="colecciones" class="seccion">
+        <h2 class="titulo-seccion">Colecciones y categorías</h2>
+        <p class="subtitulo-seccion">
             El fondo está organizado en 24 categorías temáticas. Estas son las cinco con mayor número de
             ejemplares y de préstamos durante el último año académico.
         </p>
@@ -156,106 +158,57 @@
         </aside>
     </section>
 
-    @* ---------- SERVICIOS ---------- *@
-    <section id="servicios" class="acerca-seccion">
-        <h2>Servicios bibliotecarios</h2>
-        <p>Despliega cada servicio para conocer sus condiciones de uso.</p>
+    @* ---------- SERVICIOS ----------
+       Misma lista que muestra la página Inicio como tarjetas: aquí se presenta
+       como desplegables <details> con las condiciones de uso. *@
+    <section id="servicios" class="seccion">
+        <h2 class="titulo-seccion">Servicios bibliotecarios</h2>
+        <p class="subtitulo-seccion">Despliega cada servicio para conocer sus condiciones de uso.</p>
 
         <div class="acerca-servicios">
-            <details open>
-                <summary>Préstamo a domicilio</summary>
-                <p>
-                    Hasta 3 ejemplares por 15 días, renovables una vez si el título no está reservado.
-                    Requiere carné vigente y no tener sanciones activas.
-                </p>
-            </details>
-
-            <details>
-                <summary>Sala de lectura y cabinas de estudio</summary>
-                <p>
-                    120 puestos individuales y 8 cabinas para trabajo en grupo, reservables por bloques de
-                    dos horas desde el portal.
-                </p>
-            </details>
-
-            <details>
-                <summary>Biblioteca digital</summary>
-                <p>
-                    Más de 2.000 libros electrónicos y bases de datos académicas con acceso remoto mediante
-                    las credenciales institucionales.
-                </p>
-            </details>
-
-            <details>
-                <summary>Formación de usuarios</summary>
-                <p>
-                    Talleres de búsqueda bibliográfica, gestión de referencias y normas de citación
-                    <abbr title="American Psychological Association">APA</abbr>, dictados cada inicio de semestre.
-                </p>
-            </details>
-
-            <details>
-                <summary>Clubes de lectura y actividades culturales</summary>
-                <p>
-                    Tertulias mensuales de narrativa, poesía y ensayo, presentaciones de libros y encuentros
-                    con autores. La entrada es libre.
-                </p>
-            </details>
+            @foreach (var servicio in Model.Servicios)
+            {
+                <details>
+                    <summary>
+                        @if (servicio.TieneIcono)
+                        {
+                            <svg class="icono" aria-hidden="true" focusable="false"><use href="#icono-@servicio.Icono" /></svg>
+                        }
+                        @servicio.Titulo
+                    </summary>
+                    <p>@servicio.Descripcion</p>
+                </details>
+            }
         </div>
     </section>
 
-    @* ---------- EQUIPO ---------- *@
-    <section id="equipo" class="acerca-seccion">
-        <h2>Nuestro equipo</h2>
-        <p>Ocho personas sostienen el trabajo diario de catalogación, atención y difusión.</p>
+    @* ---------- EQUIPO (CSS Grid + componente _TarjetaPersona) ---------- *@
+    <section id="equipo" class="seccion">
+        <h2 class="titulo-seccion">Nuestro equipo</h2>
+        <p class="subtitulo-seccion">
+            Ocho personas sostienen el trabajo diario de catalogación, atención y difusión.
+        </p>
 
-        <ul class="acerca-equipo">
-            <li>
-                <figure>
-                    <span class="acerca-avatar" aria-hidden="true">MC</span>
-                    <figcaption>
-                        <strong>María Cedeño</strong>
-                        <span>Directora de la biblioteca</span>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <span class="acerca-avatar" aria-hidden="true">JR</span>
-                    <figcaption>
-                        <strong>Jorge Reyes</strong>
-                        <span>Catalogación y proceso técnico</span>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <span class="acerca-avatar" aria-hidden="true">AL</span>
-                    <figcaption>
-                        <strong>Ana Luna</strong>
-                        <span>Circulación y préstamos</span>
-                    </figcaption>
-                </figure>
-            </li>
-            <li>
-                <figure>
-                    <span class="acerca-avatar" aria-hidden="true">DV</span>
-                    <figcaption>
-                        <strong>Daniel Vera</strong>
-                        <span>Colección digital y sistemas</span>
-                    </figcaption>
-                </figure>
-            </li>
+        <ul class="rejilla rejilla--lista mt-4">
+            @foreach (var persona in Model.Equipo)
+            {
+                <li>
+                    <partial name="Componentes/_TarjetaPersona" model="persona" />
+                </li>
+            }
         </ul>
     </section>
 
     @* ---------- CONTACTO Y HORARIOS ---------- *@
-    <section id="contacto" class="acerca-seccion">
-        <h2>Contacto y horarios</h2>
+    <section id="contacto" class="seccion">
+        <h2 class="titulo-seccion">Contacto y horarios</h2>
 
         <div class="acerca-columnas">
             <address class="acerca-direccion">
-                <strong>Biblioteca Virtual UEES</strong><br />
+                <span class="flexible flexible--centrado flexible--compacto mb-2">
+                    <svg class="icono" aria-hidden="true" focusable="false"><use href="#icono-mapa" /></svg>
+                    <strong>Biblioteca Virtual UEES</strong>
+                </span>
                 Campus Universitario, edificio B, planta baja<br />
                 Km 2,5 vía La Puntilla — Samborondón, Ecuador<br />
                 <a href="tel:+59342835630">+593 4 283 5630</a><br />
@@ -263,7 +216,12 @@
             </address>
 
             <table class="acerca-horarios">
-                <caption>Horario de atención al público</caption>
+                <caption>
+                    <span class="flexible flexible--centrado flexible--compacto">
+                        <svg class="icono" aria-hidden="true" focusable="false"><use href="#icono-reloj" /></svg>
+                        Horario de atención al público
+                    </span>
+                </caption>
                 <thead>
                     <tr>
                         <th scope="col">Días</th>
@@ -293,13 +251,13 @@
     </section>
 
     @* ---------- PIE DEL ARTÍCULO ---------- *@
-    <footer class="acerca-pie">
+    <footer class="acerca-pie flexible flexible--separado">
         <p>
             Portal desarrollado con ASP.NET Core <abbr title="Modelo–Vista–Controlador">MVC</abbr>,
             HTML5, CSS3 y Bootstrap 5.
         </p>
         <p>
-            Última actualización: <time datetime="2026-08-14">14 de agosto de 2026</time>
+            Última actualización: <time datetime="2026-08-20">20 de agosto de 2026</time>
         </p>
     </footer>
 
